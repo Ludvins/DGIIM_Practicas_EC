@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="ejercicios-en-r">Ejercicios en R</h1>
+<h2 id="estadística-computacional.-guillermo-galindo-ortuño">Estadística Computacional. Guillermo Galindo Ortuño</h2>
+<h3 id="funciones-de-densidad-y-distribución.">7.1 Funciones de densidad y distribución.</h3>
+<p>En el guión se nos muestra una función que permite dibujar la función de densidad y la de distribución de una normal utilizando <code>dnorm</code>, <code>pnorm</code> y <code>qnorm</code>. La primera y la segunda devuelven el valor de la función de densidad y distribución respectivamente, y toman como parámetros un punto <code>x</code> en el que calcularla, <code>mean</code> la media de la normal, y <code>sd</code> la desviación estándar. La última devuelve el cuantil <code>p</code> para una normal de media <code>mean</code> y desviación estándar <code>sd</code>. Todas asumen por defecto una normal de media 0 y desviación estándar 1.</p>
+<p>La función es la siguiente: <!--begin.rcode
+dibuja_norm <-function(n=30,alfa=.001)
+{
+    n<-as.integer(n)
+   if (n<10) stop("Hacen falta mas numeros")
+
+    a<-qnorm(alfa)
+    b<-qnorm(1-alfa)
+
+    x<-seq(a,b,,n)
+    plot(x,dnorm(x))
+
+    x<-seq(a,b,,n)
+    plot(x,pnorm(x))
+}
+end.rcode--></p>
+<p>Esta lo que hace es tomar el cuantil de valor <code>alpha</code>, y dibujar <code>n</code> puntos entre el cuantil <code>alpha</code> y <code>1-alpha</code>. Realizamos la versión equivalente de esta para las respectivas funciones de la distribución uniforme, que en lugar de <code>mean</code> y <code>sd</code> toma como parámetros <code>min</code> y <code>max</code> los límites superior e inferior de la distribución deseada, que por defecto valen 0 y 1 respectivamente.</p>
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">dibuja_unif</span> <span class="hl kwb">&lt;-</span><span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">n</span><span class="hl std">=</span><span class="hl num">30</span><span class="hl std">,</span><span class="hl kwc">alfa</span><span class="hl std">=</span><span class="hl num">.001</span><span class="hl std">)</span>
+<span class="hl std">{</span>
+    <span class="hl std">n</span><span class="hl kwb">&lt;-</span><span class="hl kwd">as.integer</span><span class="hl std">(n)</span>
+    <span class="hl kwa">if</span> <span class="hl std">(n</span><span class="hl opt">&lt;</span><span class="hl num">10</span><span class="hl std">)</span> <span class="hl kwd">stop</span><span class="hl std">(</span><span class="hl str">&quot;Hacen falta mas numeros&quot;</span><span class="hl std">)</span>
+
+    <span class="hl std">a</span><span class="hl kwb">&lt;-</span><span class="hl kwd">qunif</span><span class="hl std">(alfa)</span>
+    <span class="hl std">b</span><span class="hl kwb">&lt;-</span><span class="hl kwd">qunif</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">-</span><span class="hl std">alfa)</span>
+
+    <span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl kwd">seq</span><span class="hl std">(a,b,,n)</span>
+    <span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwd">dunif</span><span class="hl std">(x))</span>
+
+    <span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl kwd">seq</span><span class="hl std">(a,b,,n)</span>
+    <span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwd">punif</span><span class="hl std">(x))</span>
+<span class="hl std">}</span>
+</pre></div>
+</div></div>
+<p>Ahora, si hacemos <code>?Distributions</code> nos muestra todas las distribuciones disponibles en R. Entonces, tomamos por ejemplo la distribución de Cauchy con parámetros <code>location</code> y <code>scale</code> por defecto, y creamos otra función dibuja similar para esta.</p>
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">dibuja_cauchy</span> <span class="hl kwb">&lt;-</span><span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">n</span><span class="hl std">=</span><span class="hl num">30</span><span class="hl std">,</span><span class="hl kwc">alfa</span><span class="hl std">=</span><span class="hl num">.001</span><span class="hl std">)</span>
+<span class="hl std">{</span>
+    <span class="hl std">n</span><span class="hl kwb">&lt;-</span><span class="hl kwd">as.integer</span><span class="hl std">(n)</span>
+    <span class="hl kwa">if</span> <span class="hl std">(n</span><span class="hl opt">&lt;</span><span class="hl num">10</span><span class="hl std">)</span> <span class="hl kwd">stop</span><span class="hl std">(</span><span class="hl str">&quot;Hacen falta mas numeros&quot;</span><span class="hl std">)</span>
+
+    <span class="hl std">a</span><span class="hl kwb">&lt;-</span><span class="hl kwd">qcauchy</span><span class="hl std">(alfa)</span>
+    <span class="hl std">b</span><span class="hl kwb">&lt;-</span><span class="hl kwd">qcauchy</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">-</span><span class="hl std">alfa)</span>
+
+    <span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl kwd">seq</span><span class="hl std">(a,b,,n)</span>
+    <span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwd">dcauchy</span><span class="hl std">(x))</span>
+
+    <span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl kwd">seq</span><span class="hl std">(a,b,,n)</span>
+    <span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwd">pcauchy</span><span class="hl std">(x))</span>
+<span class="hl std">}</span>
+</pre></div>
+</div></div>
+<h3 id="estadísitica-descriptiva">7.2 Estadísitica descriptiva</h3>
+<p>En este apartado realizaremos un estudio de estadística descriptiva sobre el conjunto de datos de ejemplo más utilizado en la ingeniería informática, el conjunto iris. Este contieme 150 muestras de este tipo de flor. Para cargarlo, realizamos lo siguite:</p>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">data</span><span class="hl std">(</span><span class="hl str">&quot;iris&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+<p>Podemos entonces aplicar sobre este las funciones que hemos estudiado a lo largo del curso para obtener información.</p>
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">summary</span><span class="hl std">(iris)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## 
+</pre></div>
+</div></div>
+<p>Primero, la función <code>sumary</code> nos muestra los atributos de cada muestra, que son la longitud y anchura del sépalo, la longitud y anchura del pétalo, y la especie, siendo las posibilidades setosa, versicolor, y virgínica. Además, nos muestra un resumen de los datos de cada atributo, como los cuartiles, media, etc.</p>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">plot</span><span class="hl std">(iris)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">hist</span><span class="hl std">(iris[,</span><span class="hl num">1</span><span class="hl std">],</span> <span class="hl kwc">main</span><span class="hl std">=</span><span class="hl kwd">paste</span><span class="hl std">(</span><span class="hl str">&quot;Histogram of &quot;</span><span class="hl std">,</span> <span class="hl kwd">names</span><span class="hl std">(iris)[</span><span class="hl num">1</span><span class="hl std">]),</span> <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl kwd">names</span><span class="hl std">(iris)[</span><span class="hl num">1</span><span class="hl std">])</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-5-2.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">5</span><span class="hl std">))</span>
+<span class="hl kwa">for</span> <span class="hl std">(i</span> <span class="hl kwa">in</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl std">) {</span><span class="hl kwd">boxplot</span><span class="hl std">(iris[,i]) ;</span><span class="hl kwd">title</span><span class="hl std">(</span><span class="hl kwd">names</span><span class="hl std">(iris)[i])}</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-5-3.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div></div>
+<p>Aquí mostramos un gráfico con toda la información disponible en el conjunto, utilizando la función <code>plot</code>, luego mostramos un histograma usando <code>hist</code> con los datos de las longitudes de los sépalos, y por ultimo un gráfico de cajas(<code>boxplot</code>) por cada longitud y anchura, tanto del sépalo como del pétalo.</p>
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stem</span><span class="hl std">(iris[,</span><span class="hl num">2</span><span class="hl std">])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+##   The decimal point is 1 digit(s) to the left of the |
+## 
+##   20 | 0
+##   21 | 
+##   22 | 000
+##   23 | 0000
+##   24 | 000
+##   25 | 00000000
+##   26 | 00000
+##   27 | 000000000
+##   28 | 00000000000000
+##   29 | 0000000000
+##   30 | 00000000000000000000000000
+##   31 | 00000000000
+##   32 | 0000000000000
+##   33 | 000000
+##   34 | 000000000000
+##   35 | 000000
+##   36 | 0000
+##   37 | 000
+##   38 | 000000
+##   39 | 00
+##   40 | 0
+##   41 | 0
+##   42 | 0
+##   43 | 
+##   44 | 0
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">mean</span><span class="hl std">(iris[,</span><span class="hl num">2</span><span class="hl std">])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 3.057333
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">median</span><span class="hl std">(iris[,</span><span class="hl num">2</span><span class="hl std">])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 3
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">var</span><span class="hl std">(iris[,</span><span class="hl num">2</span><span class="hl std">])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.1899794
+</pre></div>
+</div></div>
+<p>En primer lugar mostramos un gráfico de <em>tallo y hoja</em> usando <code>stem</code>. Este nos muestra que en dentro de las anchuras de los sépalos, que es el atributo sobre el que mostramos el gráfico, tenemos valores como 2.0, 2.2, 2.2, 2.2, …, 4.2, 4.4. Después, mostramos la media y la mediana de este mismo atributo, y podemos observar que los valores son muy parecidos, luego el valor medio deja al mismo o casi al mismo número de elementos a izquierda y derecha. Además, ser la varianza pequeña sabemos que los datos no se encuentran muy dispersos respecto de el mencionado valor medio.</p>
+<h3 id="el-problema-de-las-dos-muestras">7.5 El problema de las dos muestras</h3>
+<p>En este a apartado utilizamos la función <code>t.test</code> que nos permite realizar un test de hipótesis utilizando una distribución <em>t de Student</em>. Este, si solo utilizamos una distribución comprueba si la media de una población conocida posee una distribución normal. Si utilizamos dos distribuciones en lugar de una, nos dice si las medias de dos poblaciones son iguales en forma normal. Vemos un par de ejemplos de su ejecución sobre nuestros datos.</p>
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">SepalL.Setosa</span>       <span class="hl kwb">&lt;-</span>  <span class="hl std">iris[iris[,</span><span class="hl num">5</span><span class="hl std">]</span> <span class="hl opt">==</span> <span class="hl str">&quot;setosa&quot;</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">]</span>
+<span class="hl std">SepalL.Versicolor</span>   <span class="hl kwb">&lt;-</span>  <span class="hl std">iris[iris[,</span><span class="hl num">5</span><span class="hl std">]</span> <span class="hl opt">==</span> <span class="hl str">&quot;versicolor&quot;</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">]</span>
+
+<span class="hl kwd">t.test</span><span class="hl std">(SepalL.Versicolor)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+## 	One Sample t-test
+## 
+## data:  SepalL.Versicolor
+## t = 81.318, df = 49, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  5.789306 6.082694
+## sample estimates:
+## mean of x 
+##     5.936
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">t.test</span><span class="hl std">(SepalL.Setosa, SepalL.Versicolor)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+## 	Welch Two Sample t-test
+## 
+## data:  SepalL.Setosa and SepalL.Versicolor
+## t = -10.521, df = 86.538, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -1.1057074 -0.7542926
+## sample estimates:
+## mean of x mean of y 
+##     5.006     5.936
+</pre></div>
+</div></div>
+<p>Esta función toma por defecto grado de confianza 0.05, por tanto, si <em>p-value</em> que obtenemos es menor que 0.05 rechazamos la hipótesis nula. En los dos casos obtenemos un p-value de <span class="math inline">\(2.2\cdot 10^{-16}\)</span>, lo que quiere decir que rechazamos, tanto que la media de la longitud de los sépalos de las plantas de tipo versicolor sigan una distribución normal (de media 0 y std 1), como que tengan la misma media estas longitudes y la de las plantas de tipo setosa.</p>
+<h3 id="regresión">7.6 Regresión</h3>
+<p>En este apartado utilizaremos la función <code>lm</code> para realizar un ajuste de un modelo lineal sobre dos atributos distintos. En particular, lo hacemos sobre la anchura y longitud de los pétalos.</p>
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">plot</span><span class="hl std">(iris[,</span><span class="hl str">&quot;Petal.Width&quot;</span><span class="hl std">], iris[,</span><span class="hl str">&quot;Petal.Length&quot;</span><span class="hl std">],</span> <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Anchura&quot;</span><span class="hl std">,</span> <span class="hl kwc">ylab</span><span class="hl std">=</span><span class="hl str">&quot;Longitud&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwd">lm</span><span class="hl std">(Petal.Width</span> <span class="hl opt">~</span> <span class="hl std">Petal.Length,</span> <span class="hl kwc">data</span><span class="hl std">=iris))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">lm</span><span class="hl std">(Petal.Width</span> <span class="hl opt">~</span> <span class="hl std">Petal.Length,</span> <span class="hl kwc">data</span><span class="hl std">=iris)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+## Call:
+## lm(formula = Petal.Width ~ Petal.Length, data = iris)
+## 
+## Coefficients:
+##  (Intercept)  Petal.Length  
+##      -0.3631        0.4158
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">summary</span><span class="hl std">(</span><span class="hl kwd">lm</span><span class="hl std">(Petal.Width</span> <span class="hl opt">~</span> <span class="hl std">Petal.Length,</span> <span class="hl kwc">data</span><span class="hl std">=iris))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+## Call:
+## lm(formula = Petal.Width ~ Petal.Length, data = iris)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.56515 -0.12358 -0.01898  0.13288  0.64272 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -0.363076   0.039762  -9.131  4.7e-16 ***
+## Petal.Length  0.415755   0.009582  43.387  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2065 on 148 degrees of freedom
+## Multiple R-squared:  0.9271,	Adjusted R-squared:  0.9266 
+## F-statistic:  1882 on 1 and 148 DF,  p-value: &lt; 2.2e-16
+</pre></div>
+</div></div>
+<p>Aquí, mostramos en el mismo gráfico, la longitud de los pétalos frente a la anchura, y la recta de regresión calculada utilizando <code>lm</code>. Seguidamente, mostramos los coeficientes que hemos obtenido, y utilizamos <code>summary</code> para poder ver datos como el error estándar, el <em>t value</em>, etc.</p>
+</body>
+</html>

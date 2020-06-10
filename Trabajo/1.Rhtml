@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Template">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    
+    <!-- FontAwesome JS-->
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+    
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/monokai-sublime.min.css">
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme-1.css">
+    
+    <title>Trabajo final</title>
+    <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .inline{
+    background-color: #FFFFFF
+    border-style: none;
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <header class="header text-center">	    
+	    <h1 class="blog-name pt-lg-4 mb-0"><a href="index.html">Estadística Computacional</a></h1>
+        
+	    <nav class="navbar navbar-expand-lg navbar-dark" >
+           
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div id="navigation" class="collapse navbar-collapse flex-column" >
+				<div class="profile-section pt-3 pt-lg-0">
+				  <img class="profile-image mb-3 rounded-circle mx-auto" src="assets/images/me.jpg" alt="image" >
+				</div><!--//profile-section-->
+				<p><strong>Luis Antonio Ortega Andrés</strong></p>
+				<p><strong>76425628D</strong></p>
+				<p><strong>5º DGIIM</strong></p>
+				<ul class="navbar-nav flex-column text-left">
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej1">Ejercicio 1</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej2">Ejercicio 2</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej3">Ejercicio 3</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej4">Ejercicio 4</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej5">Ejercicio 5</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej6">Ejercicio 6</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej7">Ejercicio 7</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej8">Ejercicio 8</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#ej9">Ejercicio 9</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#conclusiones">Conclusiones</a>
+					</li>
+          <li class="nav-item">
+					    <a class="nav-link" href="#plantilla">Plantilla</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+    </header>
+    
+    <div class="main-wrapper">
+      <section id="ej1">
+	    <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 1</h2>
+			    </header>
+
+          <p><strong>Considera en el plano el recinto cerrado finito definido por las funciones <span class="math display">\(y=x^2\)</span> y <span class="math display">\(100 x=y^2\)</span> al cual pertenece el punto de coordenadas <span class="math display">\((2,12)\)</span>. Realiza un gráfico del mismo.</strong></p>
+          <p>Empezamos definiendo el conjunto de puntos que vamos a utilizar para pintar nuestro recinto, para decidir los límites del conjunto, resolvemos <span class="math display">\(0 = x^2 - 10\sqrt{x} \implies x \in \{0,10^{2/3}\}\)</span></p>
+          <!--begin.rcode
+          x = seq(from = 0, to = 10^(2/3), by = 0.1)
+          end.rcode-->
+          <p>Declaramos ambas funciones como funciones de <code>R</code>.</p>
+          <!--begin.rcode
+          f1 <- function(x){
+            return(x^2)
+          }
+          f2 <- function(x){
+            return(sign(x)*10*sqrt(abs(x)))
+          }
+          end.rcode-->
+          <p>Usamos <code>plot</code> para pintar el contorno de la primera función y deliminar los ejes. Para rellenar el contorno utilizamos la función <code>polygon</code> que acepta como parametro la lista de puntos. Concatenamos las listas dandole la vuelta a la segunda mitad (con <code>rev</code>) para que el poligono se cierre correctamente. El parámetro <code>lwd</code> nos permite seleccionar el grosor del borde.</p>
+          <!--begin.rcode
+          plot(x,f1(x), type="l", ylab = "y")
+          polygon(
+            c(x,rev(x)),
+            c(f1(x), rev(f2(x))),
+            col=rgb(1, 0, 0,0.5),
+            border="black",
+            lwd = 2
+          )
+          end.rcode-->
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej2">
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 2</h2>
+			    </header>
+
+          <p><strong>Construye una función que indique si un punto cualquiera del plano pertenece al interior de ese recinto, al borde o al exterior. Comprueba que <span class="math display">\((2,12)\)</span> es interior. Aplícala a los puntos <span class="math display">\((0,0)\)</span>, <span class="math display">\((-1,-1)\)</span> y <span class="math display">\((30,30)\)</span> y comenta los resultados.</strong></p>
+          <p>La función comprueba si el punto <span class="math display">\(p\)</span> se encuentra dentro de el recinto cerrado delimitado por <span class="math display">\(f_1\)</span> y <span class="math display">\(f_2\)</span> donde <span class="math display">\(f_1 &lt; f_2\)</span>. Notamos que de existir varios recintos (no es el caso), esta función comprobaría que el punto se encuentre en cualquier recinto donde <span class="math display">\(f_1\)</span> esté por debajo.</p>
+          <p>Por lo tanto un punto <span class="math display">\((x,y)\)</span> estará en el interior si y solo si <span class="math display">\[
+              f_1(x) &lt; y &lt; f_2(x)
+              \]</span> Por otro lado, estará en la frontera si y solo si, coincide con uno de los dos y se encuentra al lado correcto del otro (esta comprobación se hace para solventar el caso de que las funciones delimitaran dos recintos, uno de ellos con  <span class="math display">\(f_2\)</span> por debajo) : <span class="math display">\[
+              f_1(x) = y &lt;= f_2(x)\quad \text{ o } \quad f_1(x) &lt;= y = f_2(x)
+              \]</span></p>
+          <!--begin.rcode
+          check_inside_region <- function(f1 = f1, f2 = f2, p){
+            x = p[1]
+            y = p[2]
+            if (y > f1(x) && y < f2(x))
+              return("Dentro")
+            if ((y == f1(x) && y <= f2(x)) || (y >= f1(x) && y == f2(x)))
+              return("Borde")
+            return("Exterior")
+          }
+          end.rcode-->
+          <p>Comprobamos la función con los puntos <span class="math display">\((2,12), (0,0), (-1,-1)\)</span> y <span class="math display">\((30,30)\)</span>.</p>
+          <!--begin.rcode
+          check_inside_region(f1,f2,c(2,12))
+          check_inside_region(f1,f2,c(0,0))
+          check_inside_region(f1,f2,c(-1,-1))
+          check_inside_region(f1,f2,c(30,30))
+          end.rcode-->
+          
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej3">
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 3</h2>
+			    </header>
+          <p><strong>Construye una función que seleccione un valor, que llamamos <span class="math display">\(A\)</span>, de una distribución uniforme en el intervalo <span class="math display">\((-1/100,1/100)\)</span>, y otro, que llamamos <span class="math display">\(B\)</span>, de una distribución normal de media <span class="math display">\(0\)</span> y varianza <span class="math display">\(1/100\)</span>. Añade <span class="math display">\((A,B)\)</span> al punto <span class="math display">\((2,12)\)</span> y obtendrás un punto que llamaremos <span class="math display">\(P_0\)</span>.</strong></p>
+          <p>Para generar un valor proveniente de una distribución uniforme utilizamos la función <code>runif</code> que acepta como parámetros el número de puntos a generar y los extremos del intervalo considerado. Por otro lado con <code>rnorm</code> generamos valores provenientes de la distribución normal, con parámetros el número de elementos, la media y la varianza de la distribución. </p>
+          <!--begin.rcode
+          ej3 <- function(){
+            A <- runif(1, -1/100, 1/100)
+            B <- rnorm(1, 0, 1/100)
+            return(c(2,12) + c(A, B))
+          }
+          end.rcode-->
+          <!--begin.rcode
+          P0 = ej3()
+          P0
+          end.rcode-->
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej4">
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 4</h2>
+			    </header>
+
+          <p><strong>Considera el recorrido aleatorio con barrera absorbente definido del siguiente modo: sea un punto que en el tiempo <span class="math display">\(t=0\)</span> comienza en el origen, <span class="math display">\(P_0\)</span> del apartado anterior, y se desplaza del siguiente modo:</strong> 1. <strong>En cada tiempo <span class="math display">\(t, t=1,2,\ldots\)</span> se lanza un dado dos veces y una moneda dos veces.</strong> 2. <strong>Si la suma de puntos de los dados es superior a <span class="math display">\(5\)</span>, la coordenada <span class="math display">\(x\)</span> del punto se modifica para que aumente <span class="math display">\(5\)</span> centésimas, si no, disminuye <span class="math display">\(5\)</span> centésimas.</strong> 3. <strong>Si las dos monedas son cara, la coordenada <span class="math display">\(y\)</span> del punto se modifica para que aumente <span class="math display">\(5\)</span> centésimas, si las dos son cruz, permanece inalterable y si no, disminuye <span class="math display">\(5\)</span> centésimas.</strong> 4. <strong>A continuación el punto salta hasta sus nuevas coordenadas.</strong> 5. <strong>El proceso finaliza si, tras el salto, el punto alcanza el perímetro de la región o el exterior de la misma.</strong></p>
+          <p><strong>Escribe una función que simule el movimiento del punto y devuelva, para un número máximo, <span class="math display">\(M\)</span>, de pasos:</strong></p>
+          <ol type="1">
+            <li><strong>La progresión aleatoria definida.</strong></li>
+            <li><strong>Cuantos pasos han sido necesarios para llegar al límite o NA si no lo consigue.</strong></li>
+          </ol>
+          <!--begin.rcode
+          ej4 <- function(p, M = 10000){
+          # Declaramos la lista de valores obtenidos, dividida en X e Y
+            Xs <- list()
+            Ys <- list()
+    
+            # Realizamos las M iteraciones
+            for (i in 1:M) {
+              # Si el punto está dentro, terminamos y devolvemos los valores
+              if (check_inside_region(f1,f2,p) != "Dentro")
+                return(list(Conseguido = TRUE, Pasos=i, X = Xs, Y = Ys))
+        
+              # Simulamos los dos lanzamientos de moneda con 2 
+              # lanzamientos con reemplazamiento con 2 posibles valores
+              monedas <- sample(2,2, replace=TRUE)
+              # Hacemos lo mismo con los dados.
+              dado <- sample(6,2, replace=TRUE)
+              
+              # Comprobaciones de dados
+              if (dado[1] + dado[2] > 5)
+                p = p + c(0.05,0)
+              else
+                p = p - c(0.05,0)
+              # Comprobaciones de las monedas, un 1 simboliza cara. Luego si la suma es 
+              #  2, ambos lanzamientos son cara.
+              if (monedas[1] + monedas[2] == 2)
+                p = p + c(0,0.05)
+              # Por otro lado, si la suma es 3, los dos valores son distintos.
+              else if (monedas[1] + monedas[2] == 3)
+                p = p - c(0,0.05)
+              # En caso de ser 2 cruces, no alteramos el punto
+              
+              Xs[[i]] <- p[1]
+              Ys[[i]] <- p[2]
+            }
+            return (list(Conseguido = FALSE, Pasos = NA, X = Xs, Y = Ys))
+          }
+          end.rcode-->
+
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej5">
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 5</h2>
+			    </header>
+          <p><strong>Realiza una simulación concreta del proceso con <span class="math display">\(M=10000\)</span> y represéntala gráficamente (mediante líneas) sobre la gráfica de la región.</strong></p>
+          <!--begin.rcode
+          # Realizamos el experimento
+          a <- ej4(P0)
+          
+          # Tomamos las coordenadas obtenidas.
+          Xs <- a$X
+          Ys <- a$Y
+
+          # Pintamos el recinto 
+          plot(x,f1(x), type="l", ylab = "y")
+          polygon(
+            c(x,rev(x)),
+            c(f1(x), rev(f2(x))),
+            col=rgb(1, 0, 0,0.5)
+          )
+          # Pintamos la linea de puntos
+          points(Xs, Ys, type="l")
+          end.rcode-->
+          
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej6">
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 6</h2>
+			    </header>
+
+          <p><strong>Realiza esta misma representación gráfica centrada en el punto de salida y con una anchura y altura de 2 unidades.</strong></p>
+          <!--begin.rcode
+          # Tomamos el como punto central el último de los devueltos
+          xcenter = Xs[length(Xs)][[1]]
+          ycenter = Ys[length(Ys)][[1]]
+
+          # Creamos la secuenta sobre la que vamos a pintar
+          x = seq(from = xcenter-1, to = xcenter+1, by = 0.1)
+          # Pintamos en dicha secuenta, marcando los límites en el eje y
+          plot(x,f1(x), type="l", ylim=c(ycenter-1, ycenter+1), ylab = "y")
+          polygon(
+            c(x,rev(x)),
+            c(f1(x), rev(f2(x))),
+            col=rgb(1, 0, 0,0.5)
+          )
+          # Filtramos aquellos valores del experimento que están centro del recinto considerado
+          filter = Xs > xcenter-1 & Xs < xcenter+1 & Ys > ycenter-1 & Ys < ycenter+1
+          points(Xs[filter], Ys[filter], type="l")
+          end.rcode-->
+          
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej7">
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 7</h2>
+			    </header>
+          <p><strong>Realiza cuatro simulaciones concretas del proceso con <span class="math display">\(M=6000\)</span> y represéntalas gráficamente sobre la gráfica de la región utilizando colores distintos para cada una.</strong></p>
+          <!--begin.rcode
+          # Tomamos un entorno adecuado sobre el que pintar las sucesiones
+          x = seq(from = 0, to = 10^(2/3), by = 0.1)
+          plot(x,f1(x), type="l", ylim=c(10,15), ylab = "y")
+          polygon(
+            c(x,rev(x)),
+            c(f1(x), rev(f2(x))),
+            col=rgb(1, 0, 0,0.5)
+          )
+          # Creamos un array de colores
+          colors = c("Green", "Red", "Orange", "Blue", "Pink", "Brown")
+          # Realizamos los 6 experimentos
+          for(i in 1:6){
+            a <- ej4(P0,6000)
+            Xs <- a$X
+            Ys <- a$Y
+            # En cada experimento pintamos con un color distinto
+            points(Xs, Ys, type="l", col=colors[[i]])
+          }
+          end.rcode-->
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej8">            
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 8</h2>
+			    </header>
+
+          <p><strong>Escribe una función con un argumento que permita repetir un número de veces, <span class="math display">\(n\)</span>, este proceso y devuelva un vector con el número de pasos necesarios para salir del recinto en cada repetición.</strong></p>
+          <!--begin.rcode
+          exp1 <- function(n, M=1000){
+            a <- 0
+            for(i in 1:n){
+              # En cada iteración guardamos los pasos necesarios
+              a[[i]] <- ej4(P0,M)$Pasos
+            }
+            return(a)
+          }
+          end.rcode-->
+          <p>Mostramos un ejemplo de 10 ejecuciones</p>
+          <!--begin.rcode
+          exp1(10)
+          end.rcode-->
+          
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="ej9">            
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Ejercicio 9</h2>
+			    </header>
+
+          <p><strong>Analiza el vector que se obtiene con la función anterior para <span class="math display">\(n=1000\)</span> y <span class="math display">\(M=3000\)</span> y comenta cómo es la distribución del parámetro pasos necesarios para llegar al límite en este proceso. ¿Es <span class="math display">\(M\)</span> suficientemente grande? A la luz de lo obtenido, indica razonadamente si habría que usar un valor mayor o no, y en caso afirmativo, repítelo alterando el valor de <span class="math display">\(M\)</span>.</strong></p>
+          <p>Ejecutamos los 1000 experimentos.</p>
+          <!--begin.rcode
+          res <- exp1(1000, 3000)
+          end.rcode-->
+          <p>Utilizamos la función <code>summary</code> para ver el mínimo, máximo, cuartiles, media y mediana de la distribución empírica.</p>
+          <!--begin.rcode
+          summary(res)
+          end.rcode-->
+          <p>Podemos utilizar la función <code>var</code> para ver la varianza de la distribución.</p>
+          <!--begin.rcode
+          var(res)
+          end.rcode-->
+          <p>Utilizamos la función <code>hist</code> para mostrar el histograma.</p>
+          <!--begin.rcode
+          hist(res, main="Histograma del experimento")
+          end.rcode-->
+
+          <p>Como se puede observar, la distribución presenta una asimetría positiva</p>
+
+          <p>En cuanto al valor de <span class="math display">\(M\)</span>, el resultado tiene una media de iteraciones de 65, con una varianza de 241, por esto, un valor de <span class="math display">\(M\)</span> de 3000 es mucho más que suficiente para realizar el experimento.</p>
+
+          <p>Vemos cierta similitud entre el histograma de la distribución con el de una distribución normal. Sin embargo, al estar definida en <span class="math display">\(\mathbb{R}^+\)</span> y por la forma del histograma, podemos pensar tambien en una distribución beta extrapolada.</p>
+          <!--begin.rcode
+          norm_values = rnorm(1000, mean(res), sqrt(var(res)))
+          end.rcode-->
+          <!--begin.rcode
+          hist(norm_values, main="Histograma de valores normales") 
+          end.rcode--> 
+          <p>Generamos puntos de una distribución beta y multiplicamos los valores por el cociente de las medias, siendo la media de una distribución <span class="math display">\(Beta(\alpha, \beta)\)</span>, <span class="math display">\(\frac{\alpha}{\alpha + \beta}\)</span>.</p>
+          <!--begin.rcode
+          beta_values = rbeta(1000, 2,5)
+          beta_values = beta_values*mean(res)/(2/7)
+          end.rcode-->
+          <!--begin.rcode
+          hist(beta_values, main="Histograma de Beta extrapolada")
+          end.rcode-->
+          <p>Vemos cierta similitud entre este último histograma y el que obtuvimos en el experimento, sin embargo, no podemos asegurar nada.</p> 
+
+          <p>Podemos realizar un <code>t.test</code> para delimitar un intervalo de confianza al 0.95 para la media. El cual cambiará de una ejecución a otra.</p>
+          <!--begin.rcode
+          t.test(res)
+          end.rcode-->
+          
+		    </div><!--//container-->
+	    </article>
+      </section>
+      <section id="conclusiones">            
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Conclusiones</h2>
+			    </header>
+          <p>En este trabajo hemos utilizado diversas funciones básicas de <code>R</code>, para estudiar un experimento de <strong>caminata aleatoria</strong> consistente en el número de pasos necesarios hasta alcanzar una barrera, donde intervienen, un punto inicial, dos funciones, lanzamientos de dados y monedas.</p>
+
+          <p>En conclusión creo que he utilizado de forma correcta las herramientas de las que nos provee el paquete básico de <code> R </code> para realizar estos ejercicios.</p>
+        </div>
+      </article>
+      </section>
+      <section id="plantilla">            
+      <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Plantilla</h2>
+			    </header>
+          <p>La plantilla se ha obtenido del siguiente <a href="https://www.free-css.com/free-css-templates/page255/devblog-v1.1">enlace</a>. Su uso es libre siempre y cuando se mantenga el pie de página.</p>
+        </div>
+      </article>
+      </section>
+      
+  	  <footer class="footer text-center py-2 theme-bg-dark">
+		   
+	      <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+		    
+	    </footer>
+    
+    </div><!--//main-wrapper-->
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Estadística Computacional</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="assets/imges/favicon.ico"/>
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Line icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+    <!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Slick slider -->
+    <link href="assets/css/slick.css" rel="stylesheet">
+    <!-- Gallery Lightbox -->
+    <link href="assets/css/magnific-popup.css" rel="stylesheet">
+    <!-- Theme color -->
+    <link id="switcher" href="assets/css/theme-color/default-theme.css" rel="stylesheet">
+    <!-- Main Style -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Fonts -->
+
+    <!-- Open Sans for body font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700,800" rel="stylesheet">
+    <!-- Montserrat for Title -->
+  	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+ 
+ 
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+  	<!-- Start Header -->
+	<header id="mu-header" class="" role="banner">
+		<div class="container">
+			<nav class="navbar navbar-default mu-navbar">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		   				<ul class="nav navbar-nav mu-menu navbar-right">
+							<li><a href="#"></a></li>
+							<li><a href="#plot">PLOT</a></li>
+							<li><a href="#curve">CURVE</a></li>
+							<li><a href="#text">TEXT</a></li>
+							<li><a href="#symbols">SYMBOLS</a></li>
+							<li><a href="#hist">HIST</a></li>
+							<li><a href="#polygon">POLYGON</a></li>
+							<li><a href="#lines">LINES & POINTS</a></li>
+							<li><a href="#barplot">BARPLOT</a></li>
+							<li><a href="#boxplot">BOXPLOT</a></li>
+							<li><a href="#pairs">PAIRS</a></li>
+							<li><a href="#multiples">GRÁFICOS MULTIPLES</a></li>
+							<li><a href="#sectores">DIAGRAMAS DE SECTORES </a></li>
+							<li><a href="#estrella">DIAGRAMAS DE ESTRELLA</a></li>
+							<li><a href="#tridimensionales">REPRESENTACIONES TRIDIMENSIONALES</a></li>
+		   				</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</div>
+	</header>
+
+	<!-- End Header -->
+	<!-- Start Featured Slider -->
+
+	<section id="mu-featured-slider">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="mu-featured-slide">
+
+					<!-- Start Single slide -->
+					<div class="mu-featured-slider-single">
+						<img src="assets/images/slider-img-4.jpg">
+						<div class="mu-featured-slider-content">
+							<h1>Estadística Computacional</h1>
+							<p>Luis Antonio Ortega Andrés</p>
+						</div>
+					</div>
+					<!-- End Single slide -->
+				</div>
+			</div>			
+		</div>
+	</section>
+	
+	<!-- Start Featured Slider -->
+
+  
+	
+<main role="main">
+    <section id="plot">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="mu-about-area">
+                        <div class="mu-about-header">
+							<h2 class="mu-heading-title">Función Plot</h2>
+							<span class="mu-header-dot"></span>
+						</div>
+
+
+<p>La función <code>plot</code> nos permite crear un gráfico de una serie de datos.</p>
+<p><code>plot(x, y, type, main, sub, xlab, ylab)</code></p>
+<p>Los parámetros son los siguientes:</p>
+<ul>
+<li><code>x</code>: Coordenadas de los puntos. Se puede utilizar cualquier objeto de <code>R</code>, sobre el que se pueda utilizar <code>plot</code>.</li>
+<li><code>y</code>: Coordenadas <code>y</code> para <code>x</code> en caso de tener una estructura apropiada.</li>
+<li><code>type</code>: El tipo de <code>plot</code> que queremos utilizar <strong>p</strong>oints, <strong>l</strong>ines, <strong>b</strong>oth… Por defecto utiliza puntos.</li>
+</ul>
+<p>Veamos ejemplos de ejecución.</p>
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">plot</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">100</span><span class="hl std">, (</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">100</span><span class="hl std">)</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">,</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">&quot;l&quot;</span><span class="hl std">)</span>
+    </pre></div>
+
+    
+  </div><div class="rimage default"><img src="figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div></div>
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(data.table)</span>
+<span class="hl std">datos2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">fread</span><span class="hl std">(</span><span class="hl str">&quot;http://www.ugr.es/local/andresgc/Datos2.txt&quot;</span><span class="hl std">)</span>
+<span class="hl std">datos1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">fread</span><span class="hl std">(</span><span class="hl str">&quot;http://www.ugr.es/local/andresgc/Datos.txt&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">plot</span><span class="hl std">(datos2</span><span class="hl opt">$</span><span class="hl std">Altura,</span> <span class="hl kwc">main</span> <span class="hl std">=</span> <span class="hl str">&quot;Altura de Datos2&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
+
+
+
+
+<section id="curve">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Curve</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+<p>Esta función nos permite dibujar la imagen de una función en un intervalo concreto. Utilizaremos esta funcion en los próximos apartados.</p>
+<p><code>curve(expr, from, to, n, add, type, xlim)</code></p>
+<p>Los parámetros son los siguientes:</p>
+<ul>
+<li><code>expr</code>: Función a utilizar (definida sobre <code>x</code>).</li>
+<li><code>from</code> y <code>to</code>: Marcan el inicio y el fin del intervalo.</li>
+<li><code>n</code>: Número de puntos a dibujar. Por defecto <code>101</code>.</li>
+<li><code>add</code>: Indica si el gráfico se añade al gráfico actual. Por defecto <code>False</code>.</li>
+<li><code>type</code>: Indica el tipo de gráfico. Por defecto <code>l</code> (lineas)</li>
+<li><code>xlim</code>: Indica los límites del gráfico en un vector numérico de longitud 2. Por defecto <code>Null</code>.</li>
+</ul>
+<p>Veamos un ejemplo donde pintamos una función seno y una coseno en un mismo gráfico.</p>
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">curve</span><span class="hl std">(</span><span class="hl kwd">sin</span><span class="hl std">(x),</span> <span class="hl opt">-</span><span class="hl std">pi, pi,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;blue&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">curve</span><span class="hl std">(</span><span class="hl kwd">cos</span><span class="hl std">(x),</span> <span class="hl opt">-</span><span class="hl std">pi, pi,</span> <span class="hl kwc">add</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;red&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div></div>
+
+</section>
+<section id="text">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Text</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+    
+<p>Con esta función podemos añadir el texto que deseemos a una grafica existente.</p>
+<p><code>text(x, y, labels, adj, pos, offset, vfont, cex, col, font)</code></p>
+<ul>
+<li><code>x,y</code>: vectores numéricos de coordenadas. Se puede utilizar solo el parámetro <code>x</code> con una estrucutra adecuada.</li>
+<li><code>labels</code>: Vector de tipo carácter o una expresión que especifica el texto.</li>
+<li><code>adj</code>: uno o dos valores del intervalo [0,1] que especifican la posición del texto respecto a <code>(x,y)</code>. Valores como 0, 0.5 y 1 especifican que <code>(x,y)</code> debe alinearse con la parte baja/izquierda, el centro y l parte alta/derecha del texto respectivamente.</li>
+<li><code>pos</code>: toma valores 1, 2, 3 o 4 para indicar que el texto debe estar debajo, a la izquierda, encima o a la derecha.</li>
+<li><code>cex</code>: factor de expansión de los caracteres.</li>
+<li><code>col</code> y <code>font</code>: Color y la fuente.</li>
+</ul>
+<p>Pintamos ahora el texto sobre una crva de la función seno.</p>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">curve</span><span class="hl std">(</span><span class="hl kwd">sin</span><span class="hl std">(x),</span> <span class="hl opt">-</span><span class="hl std">pi, pi,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;blue&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">text</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">3</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl str">&quot;sen(x)&quot;</span><span class="hl std">,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;blue&quot;</span><span class="hl std">,</span> <span class="hl kwc">cex</span> <span class="hl std">=</span> <span class="hl num">4</span><span class="hl std">,</span> <span class="hl kwc">adj</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div></div>
+
+</section>
+<section id="symbols">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Symbols</h2>
+		<span class="mu-header-dot"></span>
+	  </div>
+
+    
+<p>Con esta función podemos dibujar círculos, cuadrados, rectángulos, estrellas, termómetros o cajas en una posición de un grafo.</p>
+<p><code>symbols(x, y, circles, squares, rectangles, stars, thermometers, boxplots...)</code></p>
+<p>Donde</p>
+<ul>
+<li><code>x</code> e <code>y</code>: Con las coordenadas de los centros de los símbolos.</li>
+<li><code>circles</code>: Es un vector con los radios de los círculos.</li>
+<li><code>squares</code>: Vector con la longitud de los lados.</li>
+<li><code>rectangles</code>: Matriz de dos columnas. La primera indica la anchura y la segunda la altura.</li>
+<li><code>stars</code>: Matriz de 3 o más columnas correspondiente a la longitud de los rayos desde el centro de la estrella.</li>
+<li><code>thermometers</code>: Matriz de 3 o 4 columnas. Las primeras 2 indica la anchura y altura. La tercera y cuarta indican como de lleno esta el termómetro,</li>
+</ul>
+<p>Veamos un ejemplo donde dibujamos 10 circulos cuyos radios se han generado utilizando una distribución uniforme <code>runif</code>.</p>
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">z</span> <span class="hl kwb">=</span> <span class="hl kwd">runif</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">)</span>
+<span class="hl std">x</span> <span class="hl kwb">=</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">10</span>
+<span class="hl kwd">symbols</span><span class="hl std">(x,z,</span><span class="hl kwc">circles</span> <span class="hl std">= z,</span> <span class="hl kwc">xlim</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">),</span> <span class="hl kwc">ylim</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1.5</span><span class="hl std">),</span> <span class="hl kwc">bg</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">10</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div></div>
+    
+</section>    
+
+<section id="hist">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función hist</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+
+<p>Esta función nos permite generar y devolver un histograma de un conjunto de datos. Un conjunto simplificado de los parámetros de llamada a la función son los siguientes:</p>
+<p><code>hist(x, breaks, freq, probability, include.lowest, right, density, angle, col, border)</code></p>
+<ul>
+<li><code>x</code>: Vector que contiene los valores para los que se realizará el histograma.</li>
+<li><code>breaks</code>: Puntos de corte que definen los intervalos.</li>
+<li><code>freq</code>: Variable de tipo lógico que indica si se representan frecuencias absolutas (TRUE) o relativas (FALSE).</li>
+<li><code>include.lowest</code>: Variable de tipo lógico que indica en que intervalo se incluyen los puntos que coincidan con el extremo del intervalos.</li>
+<li><code>right</code>: Variable de tipo lógico que indica si los intervalos son cerrados por la derecha.</li>
+<li><code>density</code>: Número de lı́neas por pulgada para hacer sombreados.</li>
+<li><code>angle</code>: Pendiente en grados para las lı́neas de sombreado.</li>
+<li><code>col</code>: Color con que se rellenan las barras.</li>
+<li><code>border</code>: Color con que se dibujan las barras.</li>
+</ul>
+<p>Podemos ver un ejemplo de ejecución con los siguiendes datos que generan una muestra pseudoaleatoria de una distribución normal N(0,1).</p>
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">hist</span><span class="hl std">(</span><span class="hl kwd">rnorm</span><span class="hl std">(</span><span class="hl num">100</span><span class="hl std">),</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;red&quot;</span><span class="hl std">,</span> <span class="hl kwc">freq</span><span class="hl std">=F,</span> <span class="hl kwc">xlim</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">5</span><span class="hl std">,</span><span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">ylim</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl kwd">dnorm</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">)</span><span class="hl opt">*</span><span class="hl num">1.2</span><span class="hl std">),</span><span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">ylab</span><span class="hl std">=</span><span class="hl str">&quot;Densidad&quot;</span><span class="hl std">,</span><span class="hl kwc">main</span><span class="hl std">=</span><span class="hl str">&quot;Muestra y Población&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">curve</span><span class="hl std">(</span><span class="hl kwd">dnorm</span><span class="hl std">(x),</span><span class="hl opt">-</span><span class="hl num">5</span><span class="hl std">,</span><span class="hl num">5</span><span class="hl std">,</span><span class="hl kwc">add</span><span class="hl std">=T,</span><span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">)</span>
+    
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div></div>
+<p>También podemos ver un histograma sobre nuestros datos.</p>
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">hist</span><span class="hl std">(datos2</span><span class="hl opt">$</span><span class="hl std">Altura,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;purple&quot;</span><span class="hl std">,</span> <span class="hl kwc">main</span> <span class="hl std">=</span> <span class="hl str">&quot;Historgrama de la Altura de Datos2&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div></div>
+</section>
+
+<section id="polygon">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Polygon</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+  
+<p>Con esta función podemos dibujar polígonos definidos mediante sus vertices sobre un grafo ya existente.</p>
+<p><code>polygon(x, y, density, angle, border, col, lty)</code></p>
+<p>Los parámetros de llamada mas importantes son:</p>
+<ul>
+<li><code>density</code>: Número de líneas por pulgada a utilizar en el sombreado.</li>
+<li><code>angle</code>: Pendiente en grados de las lineas del sombreado.</li>
+<li><code>border</code>: Color con el que se dibuja el bordel del polígono. <strong>NA</strong> indica que no se dibujan.</li>
+<li><code>col</code>: Color a utilizar en el relleno del polígono.</li>
+<li><code>lty</code>: Tipo de línea a utilizar.</li>
+</ul>
+<p>Veamos un ejemplo de ejecución.</p>
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">x</span><span class="hl kwb">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">9</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x, x,</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">&quot;n&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">polygon</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">NA</span><span class="hl std">,</span><span class="hl num">6</span><span class="hl std">,</span><span class="hl num">8</span><span class="hl std">,</span><span class="hl num">8</span><span class="hl std">,</span><span class="hl num">6</span><span class="hl std">),</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">,</span><span class="hl num">NA</span><span class="hl std">,</span><span class="hl num">6</span><span class="hl std">,</span><span class="hl num">6</span><span class="hl std">,</span><span class="hl num">8</span><span class="hl std">,</span><span class="hl num">8</span><span class="hl std">),</span> <span class="hl kwc">density</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">,</span> <span class="hl num">20</span><span class="hl std">),</span> <span class="hl kwc">angle</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">45</span><span class="hl std">,</span> <span class="hl num">45</span><span class="hl std">),</span><span class="hl kwc">col</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;red&quot;</span><span class="hl std">,</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">))</span>
+</pre></div>
+  </div><div class="rimage default"><img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div></div>
+
+
+</section>
+
+
+<section id="lines">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Funciones lines & points</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+        
+<p>Estas funciones nos permiten añadir líneas o puntos (respectivamente) al gráfico actual. Debemos tener en cuenta que debe existir un gráfico sobre el cual añadir estos elementos.</p>
+<p><code>lines(x, y, type = "l")</code></p>
+<p><code>points(x, y, type = "p")</code></p>
+<p>Los parámetros son los siguientes:</p>
+<ul>
+<li><code>x</code> e <code>y</code>: Son las coordenadas de los puntos.</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">x</span><span class="hl kwb">=</span><span class="hl kwd">rnorm</span><span class="hl std">(</span><span class="hl num">30</span><span class="hl std">)</span>
+<span class="hl std">opar</span><span class="hl kwb">=</span><span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">3</span><span class="hl std">))</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Tiempo&quot;</span><span class="hl std">,</span><span class="hl kwc">ylab</span><span class="hl std">=</span><span class="hl str">&quot;Ruido&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Tiempo&quot;</span><span class="hl std">,</span><span class="hl kwc">ylab</span><span class="hl std">=</span><span class="hl str">&quot;Ruido&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">lines</span><span class="hl std">(x,</span><span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,</span><span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Tiempo&quot;</span><span class="hl std">,</span><span class="hl kwc">ylab</span><span class="hl std">=</span><span class="hl str">&quot;Ruido&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">lines</span><span class="hl std">(x,</span><span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">points</span><span class="hl std">(x,</span><span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;red&quot;</span><span class="hl std">,</span><span class="hl kwc">pch</span><span class="hl std">=</span><span class="hl num">4</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">par</span><span class="hl std">(opar)</span>
+</pre></div>
+</div></div>
+
+<p>Podemos ver otro ejemplo donde utilizamos <code>attach</code> para indicar a <code>R</code> que debe buscar variables dentro de <code>datos2</code>.</p>
+<p>Buscamos pintar puntos <code>(altura, peso)</code> conectando aquellos correspondientes a mujeres entre si, e igual para los hombres.</p>
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">attach</span><span class="hl std">(datos2)</span>
+<span class="hl std">Mujer</span><span class="hl kwb">&lt;-</span><span class="hl std">Sexo</span><span class="hl opt">==</span><span class="hl str">&quot;M&quot;</span>
+<span class="hl kwd">plot</span><span class="hl std">(Altura,Peso)</span>
+<span class="hl kwd">points</span><span class="hl std">(Altura[Mujer], Peso[Mujer],</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">&quot;p&quot;</span><span class="hl std">,</span> <span class="hl kwc">pch</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">,</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;yellow&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">points</span><span class="hl std">(Altura[</span><span class="hl opt">!</span><span class="hl std">Mujer], Peso[</span><span class="hl opt">!</span><span class="hl std">Mujer],</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">&quot;p&quot;</span><span class="hl std">,</span> <span class="hl kwc">pch</span><span class="hl std">=</span><span class="hl num">4</span><span class="hl std">,</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">points</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(Altura[Mujer],</span> <span class="hl num">NA</span><span class="hl std">, Altura[</span><span class="hl opt">!</span><span class="hl std">Mujer]),</span> <span class="hl kwd">c</span><span class="hl std">(Peso[Mujer],</span> <span class="hl num">NA</span><span class="hl std">, Peso[</span><span class="hl opt">!</span><span class="hl std">Mujer]),</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">&quot;b&quot;</span><span class="hl std">,</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;red&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">detach</span><span class="hl std">(datos2)</span>
+</pre></div>
+</div></div>
+</section>
+
+
+
+<section id="barplot">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Barplot</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>Esta función nos permite pintar diagramas de barras de diversas formas distintas.</p>
+<p><code>barplot(height, col, main...)</code></p>
+<p>Donde <code>height</code> puede ser ranro un vector como un matrix que describa las barras del diagrama.</p>
+<p>Podemos ver un ejemplo utilizando una tabla de valores pseudoaleatorios para las alturas.</p>
+<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">tN</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">table</span><span class="hl std">(Ni</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rpois</span><span class="hl std">(</span><span class="hl num">100</span><span class="hl std">,</span> <span class="hl kwc">lambda</span><span class="hl std">=</span><span class="hl num">5</span><span class="hl std">))</span>
+<span class="hl std">r</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">barplot</span><span class="hl std">(tN,</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl kwd">rainbow</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div></div>
+
+</section>
+
+<section id="boxplot">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Boxplot</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>Esta función nos permite realizar diagramas de <code>boxplot</code> o caja con bigotes.</p>
+<p><code>boxplot(x,..., range, width, notch, names...)</code></p>
+<p>donde</p>
+<ul>
+<li><code>x</code>: Vector o lista con los datos a representar, cualquier número de arguementos no especificados se considerarán como vectores de datos también.</li>
+<li><code>range</code>: Determina el tamaño de los bigotes del diagrama.</li>
+<li><code>width</code>: Vector con las ac¡nchuras relativas de cada caja con respecto al plot completo.</li>
+<li><code>notch</code>: valor lógico, cuando es verdadero se muestra una muesca en cada diagrama, si las muestras de dos diagramas no se tocan entonces hay una fuerte evidencia de que las medianas se diferencian.</li>
+<li><code>names</code>: vector de nombres de cada caja.</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">attach</span><span class="hl std">(datos2)</span>
+<span class="hl kwd">boxplot</span><span class="hl std">(Peso[Sexo</span><span class="hl opt">==</span><span class="hl str">&quot;M&quot;</span><span class="hl std">],Peso[Sexo</span><span class="hl opt">==</span><span class="hl str">&quot;H&quot;</span><span class="hl std">],</span> <span class="hl kwc">notch</span><span class="hl std">=T,</span> <span class="hl kwc">names</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;Mujer&quot;</span><span class="hl std">,</span><span class="hl str">&quot;Hombre&quot;</span><span class="hl std">),</span>
+<span class="hl kwc">ylab</span><span class="hl std">=</span><span class="hl str">&quot;Peso&quot;</span><span class="hl std">,</span><span class="hl kwc">col</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">,</span><span class="hl str">&quot;red&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning in bxp(list(stats = structure(c(47, 54.5, 58, 62.5, 65, 58, 70, : some
+## notches went outside hinges ('box'): maybe set notch=FALSE
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div></div>
+
+</section>
+
+<section id="pairs">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función Pairs</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>Esta función genera una figura que contiene todos los diagramas de dispersión de cada variable frente a las demás. La función se puede utilizar en las clases de objetos <code>matrix.data.frame</code> y <code>formula</code>.</p>
+<p><code>pairs(x, labels, panel...)</code></p>
+<ul>
+<li><code>x</code>: Coordenadas de puntos como columnas numéricas de una matriz o dataframe.</li>
+<li><code>labels</code>: Nombres de las variables.</li>
+<li><code>panel</code>: Función que se utiliza para pontar los contenidos de dentro de cada panel.</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">pairs</span><span class="hl std">(datos2[,</span><span class="hl num">2</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl std">])</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" class="plot" /></div></div>
+<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">panel.hist</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">,</span> <span class="hl kwc">...</span><span class="hl std">)</span>
+    <span class="hl std">{</span>
+        <span class="hl std">usr</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">par</span><span class="hl std">(</span><span class="hl str">&quot;usr&quot;</span><span class="hl std">);</span> <span class="hl kwd">on.exit</span><span class="hl std">(</span><span class="hl kwd">par</span><span class="hl std">(usr))</span>
+        <span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">usr</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(usr[</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">2</span><span class="hl std">],</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1.5</span><span class="hl std">) )</span>
+        <span class="hl std">h</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">hist</span><span class="hl std">(x,</span> <span class="hl kwc">plot</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+        <span class="hl std">breaks</span> <span class="hl kwb">&lt;-</span> <span class="hl std">h</span><span class="hl opt">$</span><span class="hl std">breaks; nB</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">length</span><span class="hl std">(breaks)</span>
+        <span class="hl std">y</span> <span class="hl kwb">&lt;-</span> <span class="hl std">h</span><span class="hl opt">$</span><span class="hl std">counts; y</span> <span class="hl kwb">&lt;-</span> <span class="hl std">y</span><span class="hl opt">/</span><span class="hl kwd">max</span><span class="hl std">(y)</span>
+        <span class="hl kwd">rect</span><span class="hl std">(breaks[</span><span class="hl opt">-</span><span class="hl std">nB],</span> <span class="hl num">0</span><span class="hl std">, breaks[</span><span class="hl opt">-</span><span class="hl num">1</span><span class="hl std">], y,</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl str">&quot;cyan&quot;</span><span class="hl std">, ...)</span>
+    <span class="hl std">}</span>
+
+    
+<span class="hl kwd">pairs</span><span class="hl std">(datos2[,</span><span class="hl num">2</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl std">],</span> <span class="hl kwc">panel</span><span class="hl std">=panel.smooth,</span>
+    <span class="hl kwc">diag.panel</span><span class="hl std">=panel.hist,</span> <span class="hl kwc">cex.labels</span><span class="hl std">=</span><span class="hl num">1.5</span><span class="hl std">,</span>
+    <span class="hl kwc">font.labels</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" class="plot" /></div></div>
+<div class="chunk" id="unnamed-chunk-16"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">panel.cor</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">,</span> <span class="hl kwc">y</span><span class="hl std">,</span> <span class="hl kwc">digits</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">,</span> <span class="hl kwc">prefix</span><span class="hl std">=</span><span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">cex.cor</span><span class="hl std">){</span>
+    <span class="hl std">usr</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">par</span><span class="hl std">(</span><span class="hl str">&quot;usr&quot;</span><span class="hl std">);</span> <span class="hl kwd">on.exit</span><span class="hl std">(</span><span class="hl kwd">par</span><span class="hl std">(usr))</span>
+    <span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">usr</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">))</span>
+    <span class="hl std">r</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">abs</span><span class="hl std">(</span><span class="hl kwd">cor</span><span class="hl std">(x, y))</span>
+
+
+    <span class="hl std">txt</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">format</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(r,</span> <span class="hl num">0.123456789</span><span class="hl std">),</span> <span class="hl kwc">digits</span><span class="hl std">=digits)[</span><span class="hl num">1</span><span class="hl std">]</span>
+    <span class="hl std">txt</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">paste</span><span class="hl std">(prefix, txt,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
+    <span class="hl kwa">if</span><span class="hl std">(</span><span class="hl kwd">missing</span><span class="hl std">(cex.cor)) cex</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0.8</span><span class="hl opt">/</span><span class="hl kwd">strwidth</span><span class="hl std">(txt)</span>
+    <span class="hl kwd">text</span><span class="hl std">(</span><span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">, txt,</span> <span class="hl kwc">cex</span> <span class="hl std">= cex</span> <span class="hl opt">*</span> <span class="hl std">r)</span>
+<span class="hl std">}</span>
+<span class="hl kwd">pairs</span><span class="hl std">(datos2[,</span><span class="hl num">2</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl std">],</span> <span class="hl kwc">lower.panel</span><span class="hl std">=panel.smooth,</span> <span class="hl kwc">upper.panel</span><span class="hl std">=panel.cor)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" class="plot" /></div></div>
+    
+</section>
+
+
+
+<section id="multiples">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Gráficos Multiples</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+        
+<p>Entre los argumentos de la función <code>par</code> hay algunos que permiten representar gráficos múltiples. Por ejemplo el argumento <code>mfcol = c(m,n)</code> perte dividir el gráfico en <span class="math inline">\(m \times n\)</span> partes iguales que se rellenan por columnas. <code>mfrow</code> tiene el comportameinto análogo por filas.</p>
+<p>Con las ordenes siguientes, dividimos el gŕafico actual en 6 partes y los rellenamos por filas.</p>
+<div class="chunk" id="unnamed-chunk-17"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">3</span><span class="hl std">))</span>
+<span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">10</span><span class="hl std">)</span>
+<span class="hl std">y</span><span class="hl kwb">&lt;-</span><span class="hl std">(</span><span class="hl num">4</span><span class="hl opt">:</span><span class="hl num">13</span><span class="hl std">)</span><span class="hl opt">^</span><span class="hl num">3</span>
+<span class="hl kwd">plot</span><span class="hl std">(x)</span>
+<span class="hl kwd">plot</span><span class="hl std">(y)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,y)</span>
+<span class="hl kwd">plot</span><span class="hl std">(y,y</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,y</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(y,x</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" class="plot" /></div></div>
+<p>Podemos realizar lo mismo rellenando por columas como hemos dicho antes.</p>
+<div class="chunk" id="unnamed-chunk-18"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfcol</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">3</span><span class="hl std">))</span>
+<span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">10</span><span class="hl std">)</span>
+
+<span class="hl std">y</span><span class="hl kwb">&lt;-</span><span class="hl std">(</span><span class="hl num">4</span><span class="hl opt">:</span><span class="hl num">13</span><span class="hl std">)</span><span class="hl opt">^</span><span class="hl num">3</span>
+<span class="hl kwd">plot</span><span class="hl std">(x)</span>
+<span class="hl kwd">plot</span><span class="hl std">(y)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,y)</span>
+<span class="hl kwd">plot</span><span class="hl std">(y,y</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(x,y</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">)</span>
+<span class="hl kwd">plot</span><span class="hl std">(y,x</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" class="plot" /></div></div>
+</section>
+
+
+
+<section id="sectores">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Diagramas de Sectores</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>Para crear diagramas de sectores utilizamos la funciñón <code>pie</code>.</p>
+<p><code>pie(x, labels, shadow, edges, radius, col, main...)</code></p>
+<p>Donde sus argumentos son:</p>
+<ul>
+<li><code>x</code>: Vector de valores proporcionaes al tamaño de cada sector.</li>
+<li><code>labels</code>: Vector de etiquetas de los sectores. Por defecto <code>names(x)</code>.</li>
+<li><code>shadow</code>: Vector de valores lógicos indicando qué efecto de somrbeado se debe aplicar a cada sector. Por defecto <code>False</code>, es decir, sin sombreado.</li>
+<li><code>edges</code>: Número de vertices qa utilizar en el polígono que aproximará el círculo. Por defecto <code>200</code>.</li>
+<li><code>radius</code>: Valor del radio del circulo. Por defecto <code>0.8</code>.</li>
+<li><code>col</code>: Vector de colores a utilizar en cada sector.</li>
+<li><code>main</code>: Titulo del gŕafico.</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">pie</span><span class="hl std">(datos2</span><span class="hl opt">$</span><span class="hl std">Peso,</span> <span class="hl kwc">labels</span> <span class="hl std">= datos2</span><span class="hl opt">$</span><span class="hl std">Nombre)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" class="plot" /></div></div>
+
+</section>
+
+
+
+
+
+<section id="estrella">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Diagramas de Estrella</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>Para crear diagramas de estellas utilizamos la función <code>star</code>.</p>
+<p><code>start(x, full, scale, radius, labels...)</code></p>
+<p>Donde los argumentos son los siguientes:</p>
+<ul>
+<li><code>x</code>: Matriz de datos.</li>
+<li><code>full</code>: Valor lógico que indica si los símbolos deben ocupar un círculo completo o solo el semicírculo superior.</li>
+<li><code>scale</code>: Valor lógico que indica si las columnas deben homogeneizarse al intervalo (0,1).</li>
+<li><code>radius</code>: Valor lógico que indica si deben dbujarse los radios.</li>
+<li><code>labels</code>: Etiquetas de los dibujos.</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">attach</span><span class="hl std">(datos2)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## The following objects are masked from datos2 (pos = 3):
+## 
+##     Altura, Edad, Nombre, Peso, Sexo
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">stars</span><span class="hl std">(</span><span class="hl kwd">matrix</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(Peso,Altura,Edad),</span><span class="hl kwc">ncol</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">),</span> <span class="hl kwc">main</span><span class="hl std">=</span><span class="hl str">&quot;Diagrama de estrellas&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">stars</span><span class="hl std">(</span><span class="hl kwd">matrix</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(Peso,Altura,Edad),</span><span class="hl kwc">ncol</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">),</span> <span class="hl kwc">main</span><span class="hl std">=</span><span class="hl str">&quot;Diagrama de estrellas&quot;</span><span class="hl std">,</span> <span class="hl kwc">draw.segments</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-20-2.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" class="plot" /></div></div>
+<p>Definimos la función <code>Tarta</code> que nos permitira eliminar la necesidad de realizar el conteo de fercuencias. Además la pintamos cuatro veces para mostrar la realización de varios gráficos simultaneamente.</p>
+<div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">Tarta</span><span class="hl kwb">&lt;-</span><span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">var</span> <span class="hl std">=</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
+    <span class="hl std">{</span>
+
+    <span class="hl kwa">if</span><span class="hl std">(var</span> <span class="hl opt">==</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
+        <span class="hl kwd">stop</span><span class="hl std">(</span><span class="hl str">&quot;Necesitas una variable&quot;</span><span class="hl std">)</span>
+    <span class="hl std">opar</span><span class="hl kwb">&lt;-</span><span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span> <span class="hl num">2</span><span class="hl std">))</span>
+    <span class="hl kwa">for</span><span class="hl std">(i</span> <span class="hl kwa">in</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl std">(</span><span class="hl num">2</span> <span class="hl opt">*</span> <span class="hl num">2</span><span class="hl std">))</span>
+        <span class="hl kwd">pie</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(var),</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;red&quot;</span><span class="hl std">,</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">,</span><span class="hl str">&quot;yellow&quot;</span><span class="hl std">,</span><span class="hl str">&quot;green&quot;</span><span class="hl std">,</span><span class="hl str">&quot;purple&quot;</span><span class="hl std">))</span>
+<span class="hl std">par</span><span class="hl kwb">&lt;-</span><span class="hl std">opar</span>
+<span class="hl std">}</span>
+<span class="hl kwd">Tarta</span><span class="hl std">(datos2</span><span class="hl opt">$</span><span class="hl std">Altura)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning in if (var == &quot;&quot;) stop(&quot;Necesitas una variable&quot;): the condition has
+## length &gt; 1 and only the first element will be used
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-21-1.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" class="plot" /></div></div>
+        <p>Podemos mejorar la función dando a elegir las filas y columnas en los argumentos de la función.</p>
+
+
+        
+<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">Tarta</span><span class="hl kwb">&lt;-</span><span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">var</span> <span class="hl std">=</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span><span class="hl kwc">filas</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl kwc">columnas</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">){</span>
+    <span class="hl kwa">if</span><span class="hl std">(var</span> <span class="hl opt">==</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
+        <span class="hl kwd">stop</span><span class="hl std">(</span><span class="hl str">&quot;Necesitas una variable&quot;</span><span class="hl std">)</span>
+    <span class="hl std">filas</span> <span class="hl kwb">&lt;-</span><span class="hl kwd">as.integer</span><span class="hl std">(filas)</span>
+    <span class="hl std">columnas</span><span class="hl kwb">&lt;-</span><span class="hl kwd">as.integer</span><span class="hl std">(columnas)</span>
+    <span class="hl kwa">if</span><span class="hl std">(filas</span><span class="hl opt">&lt;</span><span class="hl num">1</span><span class="hl std">)</span> <span class="hl kwd">stop</span><span class="hl std">(</span><span class="hl str">&quot;El numero de filas es &lt; 1&quot;</span><span class="hl std">)</span>
+    <span class="hl kwa">if</span><span class="hl std">(columnas</span><span class="hl opt">&lt;</span><span class="hl num">1</span><span class="hl std">)</span> <span class="hl kwd">stop</span><span class="hl std">(</span><span class="hl str">&quot;El numero de columnas es &lt; 1&quot;</span><span class="hl std">)</span>
+    <span class="hl std">opar</span><span class="hl kwb">&lt;-</span><span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(filas, columnas))</span>
+    <span class="hl kwa">for</span><span class="hl std">(i</span> <span class="hl kwa">in</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl std">(filas</span> <span class="hl opt">*</span> <span class="hl std">columnas))</span>
+        <span class="hl kwd">pie</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(var),</span> <span class="hl kwc">col</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;red&quot;</span><span class="hl std">,</span><span class="hl str">&quot;blue&quot;</span><span class="hl std">,</span><span class="hl str">&quot;yellow&quot;</span><span class="hl std">,</span><span class="hl str">&quot;green&quot;</span><span class="hl std">,</span><span class="hl str">&quot;purple&quot;</span><span class="hl std">))</span>
+    <span class="hl std">par</span><span class="hl kwb">&lt;-</span><span class="hl std">opar</span>
+<span class="hl std">}</span>
+</pre></div>
+</div></div>
+        
+</section>
+
+
+
+<section id="tridimensionales">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Representaciones Tridimensionales</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>Es posible realizar gráficos tridimensionales mediante las funciones <code>persp</code>, <code>contour</code> e <code>image</code>. Las tres utilizan los siguientes parámetros:</p>
+<ul>
+<li><code>x</code>: Vector de puntos del eje X, en orden ascendente, para los que se hará la representació.</li>
+<li><code>y</code>: Vector de puntos del eje Y, en orden ascendente, para los que se hará la representación.</li>
+<li><code>z</code>: Matriz de valores de la función a representar. Si este es el primer valor se calculan <code>x</code> e <code>y</code>.</li>
+</ul>
+<p>Comenzamos con la función <code>persp</code>, esta nos permite crear un gráfico en perspectiva.</p>
+<p><code>persp(x, y, z, xlim, ylim, zlim, xlab, ylab, zlab, theta, phi, r, box...)</code></p>
+<p>Donde</p>
+<ul>
+<li><code>xlim</code>, <code>ylim</code> y <code>zlim</code>: Representan los valores extremos del correspondiente eje. Por defecto se utiliza el rango de los datos utilizados.</li>
+<li><code>xlab</code>, ylab<code>y</code>zlab`: Representan las etiquetas de cada eje. Por defecto nulas.</li>
+<li><code>theta</code> y <code>pi</code>. Son los ángulos que definen la dirección de visión. Por defecto <code>0</code> y <code>15</code> respectivamente.</li>
+<li><code>r</code>: Distancia desdeel punto de vista al centro del grafo. Por defecto <code>sqrt(3)</code>.</li>
+<li><code>box</code>: Valor lógico indicando si debe dibujarse la caja que delimita el dibujo. Por defecto verdadero.</li>
+</ul>
+<p>La función <code>contour</code> nos permite realizar mapas de nivel.</p>
+<p><code>contour(x, y, z, nlevels, levels, labels, xlim, ylim, zlim, col, lty, lwd, add...)</code></p>
+<p>Donde:</p>
+<ul>
+<li><code>nlevels</code>: Número de niveles de contorno, sólo en el caso de que no se especifique levels. Por defecto <code>10</code>.</li>
+<li><code>levels</code>: Vector numérico de los niveles en que se dibujarán líneas de contorno.</li>
+<li><code>labels</code>: Vector de etiquetas de las líneas de contorno. Si su valor es <code>NULL</code> se utilizan los propios niveles como etiquetas. Por defecto <code>NULL</code>.</li>
+<li><code>drawlabels</code>: Valor lógico que indica si deben etiquetarse las líneas de contorno.</li>
+<li><code>xlim</code>, <code>ylim</code>, <code>zlim</code>: Extremos de <code>x</code>, <code>y</code> y <code>z</code>. Por defecto sus rangos.</li>
+<li><code>col</code>: Color de las líneas.</li>
+<li><code>lty</code>: Tipo de línea que se dibujará.</li>
+<li><code>lwd</code>: Anchura de las líneas.</li>
+<li><code>add</code>: Valor lógico que indica si debe añadirse al gráfico actual. Por defecto falso.</li>
+</ul>
+
+<li><code>zlim</code>: Vector que contiene el mínimo y el máximo de <code>z</code>.</li>
+<li><code>add</code>: Valor lógico que indica si la imagen debe añadirse al gráfico actual. Por defecto falso.</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-23"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">Seno</span><span class="hl kwb">&lt;-</span><span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">,</span><span class="hl kwc">y</span><span class="hl std">)</span> <span class="hl kwd">sin</span><span class="hl std">(x</span><span class="hl opt">*</span><span class="hl std">y)</span>
+<span class="hl std">Dibuja</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl kwc">f</span> <span class="hl std">= Seno) {</span>
+    <span class="hl kwd">split.screen</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">3</span><span class="hl std">))</span>
+    <span class="hl kwd">screen</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">)</span>
+    <span class="hl kwd">image</span><span class="hl std">(x, y,</span> <span class="hl kwd">outer</span><span class="hl std">(x, y, f))</span>
+    <span class="hl kwd">screen</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">)</span>
+    <span class="hl kwd">contour</span><span class="hl std">(x, y,</span> <span class="hl kwd">outer</span><span class="hl std">(x, y, f))</span>
+    <span class="hl kwd">screen</span><span class="hl std">(</span><span class="hl num">3</span><span class="hl std">)</span>
+    <span class="hl kwd">persp</span><span class="hl std">(x, y,</span> <span class="hl kwd">outer</span><span class="hl std">(x, y, f))</span>
+    <span class="hl std">}</span>
+    
+<span class="hl std">x</span><span class="hl kwb">&lt;-</span> <span class="hl opt">-</span><span class="hl num">5</span><span class="hl opt">:</span><span class="hl num">5</span>
+<span class="hl kwd">Dibuja</span><span class="hl std">(x,x)</span>
+<span class="hl kwd">Dibuja</span><span class="hl std">(x,x,</span><span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">,</span><span class="hl kwc">y</span><span class="hl std">)</span> <span class="hl kwd">sin</span><span class="hl std">(x)</span><span class="hl opt">*</span><span class="hl kwd">cos</span><span class="hl std">(y))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" class="plot" /></div></div>
+</body>
+</section>
+
+
+
+
+
+		<!-- Start Counter -->
+		<section id="mu-counter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="mu-counter-area">
+							<h2 class="mu-heading-title"></h2>
+
+							<div class="mu-counter-block">
+								<div class="row">
+
+									<!-- Start Single Counter -->
+									<div class="col-md-3 col-sm-6">
+										<div class="mu-single-counter">
+										</div>
+									</div>
+									<!-- / Single Counter -->
+
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Counter -->
+
+
+	</main>
+	
+	<!-- End main content -->	
+			
+
+	
+	
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Bootstrap -->
+    <script src="assets/js/bootstrap.min.js"></script>
+	<!-- Slick slider -->
+    <script type="text/javascript" src="assets/js/slick.min.js"></script>
+    <!-- Counter js -->
+    <script type="text/javascript" src="assets/js/counter.js"></script>
+    <!-- Filterable Gallery js -->
+    <script type="text/javascript" src="assets/js/jquery.filterizr.min.js"></script>
+    <!-- Gallery Lightbox -->
+    <script type="text/javascript" src="assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Ajax contact form  -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    
+	
+    <!-- Custom js -->
+	<script type="text/javascript" src="assets/js/custom.js"></script>
+	
+    
+  </body>
+</html>

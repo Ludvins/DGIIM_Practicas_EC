@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Estadística Computacional</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="assets/imges/favicon.ico"/>
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Line icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+    <!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Slick slider -->
+    <link href="assets/css/slick.css" rel="stylesheet">
+    <!-- Gallery Lightbox -->
+    <link href="assets/css/magnific-popup.css" rel="stylesheet">
+    <!-- Theme color -->
+    <link id="switcher" href="assets/css/theme-color/default-theme.css" rel="stylesheet">
+    <!-- Main Style -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Fonts -->
+
+    <!-- Open Sans for body font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700,800" rel="stylesheet">
+    <!-- Montserrat for Title -->
+  	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+ 
+ 
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+  	<!-- Start Header -->
+	<header id="mu-header" class="" role="banner">
+		<div class="container">
+			<nav class="navbar navbar-default mu-navbar">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		   				<ul class="nav navbar-nav mu-menu navbar-right">
+							<li><a href="#"></a></li>
+							<li><a href="#cartas">EXTRACCIÓN DE CARTAS</a></li>
+							<li><a href="#cuadricula">FUNCIÓN EN CUADRÍCULA</a></li>
+							<li><a href="#busqueda">LISTA BUSQUEDA Y ENTORNOS</a></li>
+							<li><a href="#lectura">LECTURA DE DATOS</a></li>
+							<li><a href="#analisis">ANÁLISIS DE DATOS</a></li>
+							<li><a href="#procesos">PROCESOS NO LINEALES</a></li>
+							<li><a href="#potencias">SUMA DE POTENCIAS</a></li>
+		   				</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</div>
+	</header>
+
+	<!-- End Header -->
+	<!-- Start Featured Slider -->
+
+	<section id="mu-featured-slider">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="mu-featured-slide">
+
+					<!-- Start Single slide -->
+					<div class="mu-featured-slider-single">
+						<img src="assets/images/slider-img-4.jpg">
+						<div class="mu-featured-slider-content">
+							<h1>Estadística Computacional</h1>
+							<p>Luis Antonio Ortega Andrés</p>
+						</div>
+					</div>
+					<!-- End Single slide -->
+				</div>
+			</div>			
+		</div>
+	</section>
+	
+	<!-- Start Featured Slider -->
+	
+<main role="main">
+    <section id="cartas">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="mu-about-area">
+                        <div class="mu-about-header">
+							<h2 class="mu-heading-title">Extracción de Cartas</h2>
+							<span class="mu-header-dot"></span>
+						</div>
+
+        <p>En este apartado definimos una serie de funciones cuyo objetivo es familiarizarnos con la generación de números aleatorios en <code>R</code>. Además utilizaremos dos funciones de <code>R</code> que nos permitirán recoger información sobre un conjunto de datos.</p>
+        
+        <p><code>hist</code>: Construye un histograma con los datos proporcionados.</p>
+        
+        <p><code>summary</code>: Proporciona datos estadísticos, valor mínimo, media, moda, valor máximo y los cuartiles.<p>
+        
+        <p>Comenzamos definiendo la función <code>CuatroAses</code>, que simula la acción de sacar cartas de una baraja (con reemplazamiento), cuando se han extraído 4 ases, devuelve el número de cartas que ha necesitado sacar. También existe un parámetro que indica el número máximo de cartas que puede extraer, pudiendo ser el resultado <strong>no conseguido</strong>.</p>
+        <!--begin.rcode
+        CuatroAses <- function(Mostrar = F, Maximo = 1000) {
+
+          Extracciones <- 0
+  Resultado <- 1:Maximo
+  Ases <- c(0, 0, 0, 0)
+
+  repeat{
+    if (Maximo <= Extracciones) {
+      if (Mostrar) {
+        cat("No he podido obtener cuatro ases en ", Extracciones, "extracciones. \n")
+      }
+
+      return(list(E = NA, R = Resultado, Conseguido = F))
+    }
+    Extracciones <- Extracciones + 1
+    SacoUna <- sample(52, 1)
+
+    Resultado[Extracciones] <- SacoUna
+
+    if (SacoUna %% 13 != 1) {
+      next
+    }
+    Ases[(SacoUna - 1) %/% 13 + 1] <- 1
+
+    if (sum(Ases) == 4) {
+      break
+    }
+  }
+  length(Resultado) <- Extracciones
+
+  if (Mostrar) {
+    cat("He necesitado ", Extracciones, " extracciones para obtener cuatro ases. \n")
+  }
+
+  return(list(E = Extracciones, R = Resultado, Conseguido = T))
+}
+end.rcode-->
+<p>Veamos que resultados obtenemos en las siguientes ejecuciones de prueba, en las que probamos también la utilización de parámetros por defecto en las funciones. <!--begin.rcode
+CuatroAses(, 10)
+CuatroAses(T, 10)
+CuatroAses()
+CuatroAses(T)
+end.rcode--></p>
+<p>La siguiente función nos permitirá replicar el experimento anterior un número determinado de veces <code>n</code>, de forma que utilizaremos <code>summary</code> e <code>hist</code> para interpretar los resultados obtenidos.</p>
+<!--begin.rcode
+DistriAses <- function(n = 5, Maximo = 1000) {
+  Saco <- vector(length = n)
+  for (i in 1:n) {
+    Saco[i] <- CuatroAses(F, Maximo)$E
+  }
+  return(Saco)
+}
+end.rcode-->
+<p>Veamos esos resultados.</p>
+<!--begin.rcode
+res <- DistriAses(100)
+summary(res)
+hist(res)
+end.rcode-->
+<p>Escribimos ahora una versión de <code>CuatroAses</code> donde no implementamos reemplazamiento. Para ello generamos una permutación de las cartas de la baraja y la vamos recorriendo.</p>
+<!--begin.rcode
+CuatroAses.Sin <- function(Mostrar = F, Maximo = 1000) {
+
+  Ases <- 0
+  Resultado <- sample(52)
+
+  for (i in 1:52) {
+    if (Resultado[i] %% 13 != 1) {
+      next
+    }
+    Ases <- Ases + 1
+    if (Ases == 4) {
+      break
+    }
+  }
+  if (Mostrar) {
+    cat("He necesitado ", i, " extracciones para obtener cuatro ases\n")
+  }
+  return(list(E = i, R = Resultado[1:i]))
+}
+
+DistriAses.Sin <- function(n = 5) {
+  Saco <- vector(length = n)
+  for (i in 1:n) {
+    Saco[i] <- CuatroAses.Sin()$E
+  }
+  return(Saco)
+}
+end.rcode-->
+<p>Veamos que resultados obtenemos ahora.</p>
+<!--begin.rcode
+res <- DistriAses.Sin(100)
+summary(res)
+hist(res)
+end.rcode-->
+<p>Podemos considerar una versión mas completa de la función donde asignamos a cada carta su nombre.</p>
+<!--begin.rcode
+CuatroAses.Nombres <- function(Mostrar = F, Maximo = 1000) {
+
+  Palos <- c("Oros", "Copas", "Espadas", "Bastos")
+  Cartas <- c("As", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez", "Sota", "Caballo", "Rey")
+  Extracciones <- 0
+  Resultado <- 1:Maximo
+  Nombres <- 0
+  Ases <- c(0, 0, 0, 0)
+
+  repeat {
+    Extracciones <- Extracciones + 1
+    if (Maximo <= Extracciones) {
+      if (Mostrar) {
+        cat("No he podido obtener cuatro ases en ", Extracciones, "extracciones. \n")
+      }
+      return(list(E = NA, R = Resultado, N = Nombres, Conseguido = F))
+    }
+    SacoUna <- sample(52, 1)
+    Resultado[Extracciones] <- SacoUna
+
+    Palo <- ((SacoUna - 1) %/% 13) + 1
+    Carta <- ((SacoUna - 1) %% 13) + 1
+
+    Nombres[Extracciones] <- paste(Cartas[Carta], " de ", Palos[Palo])
+
+    if (SacoUna %% 13 != 1) {
+      next
+    }
+
+    Ases[(SacoUna - 1) %/% 13 + 1] <- 1
+
+    if (sum(Ases) == 4) {
+      break
+    }
+  }
+  length(Resultado) <- Extracciones
+
+  if (Mostrar) {
+    cat("He necesitado ", Extracciones, " extracciones para obtener cuatro ases. \n")
+  }
+  return(list(E = NA, R = Resultado, N = Nombres, Conseguido = T))
+}
+end.rcode-->
+<p>Podemos ahora programar una función similar donde simulamos una serie de lanzamientos de un dado, de forma que los valores obtenidos se van acumulando buscando coincidir con un valor objetivo. En caso de pasarse del valor o no alcanzarlo en el número máximo de lanzamientos permitidos, se considera un fracaso.</p>
+<!--begin.rcode
+TirarDados <- function(Objetivo = 10, Mostrar = F, Maximo = 1000) {
+
+  # Inicializamos las variables
+  Tiradas <- 0
+  Resultado <- 1:Maximo
+  Acumulado <- 0
+
+  repeat{
+    # Si supera el numero maximo de tiradas sin llegar al objetivo, revolvemos que no
+    # lo ha conseguido
+
+    if (Maximo <= Tiradas) {
+      if (Mostrar) {
+        cat("No he podido llegar al objetivo en ", Tiradas, " tiradas. \n")
+      }
+
+      return(list(E = NA, R = Resultado, Conseguido = F))
+    }
+    # Hacemos una nueva tirada
+    Tiradas <- Tiradas + 1
+    Tirada <- sample(6, 1)
+
+    # Actualizamos los valores obtenidos
+    Resultado[Tiradas] <- Tirada
+    Acumulado <- Acumulado + Tirada
+
+    # Si alcanzamos el objetivo devolvemos exito y todos los valores
+    if (Acumulado == Objetivo) {
+      if (Mostrar) {
+        cat("He necesitado ", Tiradas, " tiradas para alcanzar el objetivo. \n")
+      }
+      length(Resultado) <- Tiradas
+      return(list(E = Tiradas, R = Resultado, Conseguido = T))
+    }
+    # Si nos pasamos devolvemos que no lo hemos conseguido y el vector de tiradas
+    if (Acumulado > Objetivo) {
+      if (Mostrar) {
+        cat("En ", Tiradas, " tiradas me he pasado del objetivo. \n")
+      }
+      length(Resultado) <- Tiradas
+      return(list(E = Tiradas, R = Resultado, Conseguido = F))
+    }
+  }
+}
+
+Distri.Dados <- function(n = 5) {
+  Saco <- vector(length = n)
+  for (i in 1:n) {
+    Saco[i] <- TirarDados(100)$E
+  }
+  return(Saco)
+}
+end.rcode-->
+<p>Veamos que resultados obtenemos en 2000 ejecuciones de buscar el valor 100.</p>
+<!--begin.rcode
+res <- Distri.Dados(2000)
+summary(res)
+hist(res)
+end.rcode-->
+
+<section id="cuadricula">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Función en Cuadrícula</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+
+<p>En este apartado vemos ejemplos de construcción de cuadrículas utilizando la distancia al origen de coordinadas.</p>
+<!--begin.rcode
+distancia.origen <- function(x, y) {
+  puntos <- matrix(-1, length(x), length(y))
+  for (i in 1:length(x)) {
+    for (j in 1:length(y)) {
+      puntos[i, j] <- sqrt(x[i]^2 + y[j]^2)
+    }
+  }
+  return(puntos)
+}
+end.rcode-->
+<p>Podemos hacer uso de <code>outer</code> para simplificar la función y aumentar su eficiencia.</p>
+<!--begin.rcode
+distancia.ORIGEN <- function(x, y) {
+  outer(x, y, function(x, y) sqrt(x^2 + y^2))
+}
+end.rcode-->
+<p>Podemos hacer uso de <code>proc.time()</code> para medir los tiempos de ejecución y comparar ambas soluciones.</p>
+<!--begin.rcode
+ptm <- proc.time()
+a <- distancia.origen(1:20, -10:10)
+proc.time() - ptm
+
+ptm <- proc.time()
+a <- distancia.ORIGEN(1:20, -10:10)
+proc.time() - ptm
+end.rcode-->
+<p>Utilizando a función <code>persp</code> podemos dibujar la malla que forma la cuadrícula.</p>
+<!--begin.rcode
+persp(distancia.ORIGEN(1:20, -10:10))
+end.rcode-->
+</section>
+
+
+<section id="busqueda">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Lista búsqueda y entornos</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+<p>Segun la documentación oficial en <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/search" class="uri">https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/search</a> la función <code>search()</code> devuelve una lista de paquetes y “Objetos de R”.</p>
+<!--begin.rcode
+search()
+end.rcode-->
+<p><code>searchpaths()</code> devuelve una lista con las rutas de dichos paquetes.</p>
+<!--begin.rcode
+searchpaths()
+end.rcode-->
+<p>Por ejemplo, en mi salida el 4 elemento de <code>search()</code> es <code>"package:graphics"</code> Y en correspondiente en <code>searchpaths()</code> es <code>"/usr/lib/R/library/graphics/"</code> la ruta del paquete en mi instalación en Linux.</p>
+<p>Con <code>ls()</code> podemos ver los datos y funciones que he definido.</p>
+<!--begin.rcode
+ls()
+end.rcode-->
+</section>
+
+<section id="lectura">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Lectura de datos</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+<p>Utilizamos el paquete <code>data.table</code> que podemos instalar con la siguiente orden de R <code>install.packages("data.table")</code></p>
+<!--begin.rcode
+library(data.table)
+end.rcode-->
+<p>Utilizamos la función <code>fread</code> para ello.</p>
+<!--begin.rcode
+datos2 <- fread("http://www.ugr.es/local/andresgc/Datos2.txt")
+datos1 <- fread("http://www.ugr.es/local/andresgc/Datos.txt")
+end.rcode-->
+<p>Podríamos haberlos leído del archivo local utilizando <code>read.table</code> pero de esta forma nos ahorramos añadirlo a la entrega.</p>
+<!--begin.rcode
+head(datos2)
+end.rcode-->
+</section>    
+
+<section id="analisis">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Análisis de datos</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+<p>Además de <code>hist</code> y <code>summary</code>, la siguiente función también nos permite obtener información de los datos, concretamente, utilizando <code>boxplot</code> podremos obtener una representación gráfica con el mismo nombre de estos.</p>
+<p>Probamos a construir el histograma de los datos correspondientes a la <code>Altura</code> en <code>Datos2</code>.</p>
+<!--begin.rcode
+hist(datos2$Altura)
+end.rcode-->
+<p>Obtenemos también los datos estadísticos.</p>
+<!--begin.rcode
+summary(datos2$Altura)
+end.rcode-->
+<p>Veamos que podemos hacer con BoxPlot, comenzamos con una sencilla ejecución</p>
+<!--begin.rcode
+boxplot(datos2$Peso)
+end.rcode-->
+<p>Podemos tocar los parámetros para obtener mejores resultados</p>
+<!--begin.rcode
+boxplot(datos2$Peso,
+  main = "Peso en Datos2",
+  xlab = "Peso en kg",
+  col = "orange",
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+end.rcode-->
+<p>Podemos construir la distribución normal que tenga la misma media y desviación típica que los datos que tenemos</p>
+<!--begin.rcode
+peso_norm <- rnorm(200, mean = mean(datos2$Peso, na.rm = TRUE), sd = sd(datos2$Peso, na.rm = TRUE))
+end.rcode-->
+<p>Podemos pintar tanto el original como la nueva versión</p>
+<!--begin.rcode
+boxplot(datos2$Peso, peso_norm,
+  main = "Multiples BoxPlot - Peso en Datos2",
+  names = c("Original", "normal"),
+  las = 2,
+  col = c("orange", "red"),
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+end.rcode-->
+<p>Podemos mostrar también todos los datos en un mismo boxplot</p>
+<!--begin.rcode
+boxplot(datos2$Peso, datos2$Altura, datos2$Edad,
+  main = "Multiples BoxPlot - Peso, Altura y Edad",
+  names = c("Peso", "Altura", "Edad"),
+  las = 2,
+  col = c("green", "red", "blue"),
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+end.rcode-->
+</section>
+
+<section id="procesos">
+    <div class="mu-about-header">
+		<h2 class="mu-heading-title">Procesos no Lineales</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+    <p>Esta función genera dos listas de números Ambas están sujetas a cierta aleatoriedad en su generación e influyen una en la otra. <!--begin.rcode
+    dong1 <- function(numero = 100) {
+
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+
+  x[1] <- 1
+  y[1] <- 1
+
+  for (i in 2:numero) {
+    if (sample(2, 1) == 2) {
+      m <- 1
+    } else {
+      m <- -1
+    }
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+dong1(100)
+end.rcode--></p>
+<p>Podemos cambiar la función para alterar la función para elegir los valores iniciales</p>
+<!--begin.rcode
+dong1.alt <- function(numero = 100, x_ini = 1, y_ini = 1) {
+	
+  # Esta función genera dos listas de números
+  # Ambas están sujetas a cierta aleatoriedad en su generacción
+  # e influyen una en la otra.
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+
+  x[1] <- x_ini
+  y[1] <- y_ini
+
+  for (i in 2:numero) {
+    if (sample(2, 1) == 2) {
+      m <- 1
+    } else {
+      m <- -1
+    }
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+end.rcode-->
+<!--begin.rcode
+Inicio <- Sys.time()
+a <- dong1.alt(1000, 2, 2)
+Sys.time() - Inicio
+end.rcode-->
+<p>Podemos aplicar a su vec la mejora de tiempo que se propone en el guion</p>
+<!--begin.rcode
+dong1.alt.t <- function(numero = 100, x_ini = 1, y_ini = 1) {
+
+  # Esta función genera dos listas de números
+  # Ambas están sujetas a cierta aleatoriedad en su generacción
+  # e influyen una en la otra.
+
+  
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+  m <- vector(mode = "numeric", length = numero)
+
+  x[1] <- x_ini
+  y[1] <- y_ini
+
+  m <- sample(c(-1, 1), numero, T)
+
+  for (i in 2:numero) {
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+
+Inicio <- Sys.time()
+a <- dong1.alt.t(1000, 2, 2)
+Sys.time() - Inicio
+end.rcode-->
+<p>Los experimentos no reflejan una mejora en el tiempo (incluso empeora)</p>
+<p>Podemos ampliar tambien el rango de valores donde se m</p>
+<!--begin.rcode
+dong1.alt.t.m <- function(numero = 100, x_ini = 1, y_ini = 1, m_range = 1) {
+
+  # Esta función genera dos listas de números
+  # Ambas están sujetas a cierta aleatoriedad en su generacción
+  # e influyen una en la otra.
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+  m <- vector(mode = "numeric", length = numero)
+
+  x[1] <- x_ini
+  y[1] <- y_ini
+
+  m <- sample(c(-m_range, m_range), numero, T)
+
+  for (i in 2:numero) {
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+end.rcode-->
+  
+</section>
+
+
+<section id="potencias">
+        <div class="mu-about-header">
+		<h2 class="mu-heading-title">Suma de potencias</h2>
+		<span class="mu-header-dot"></span>
+	</div>
+<p>Escribimos las funciones que hacen la suma de los cuadrados y los cubos de los elementos del vector x</p>
+<p>Devuelve el resultado en una lista</p>
+<!--begin.rcode
+sumpot <- function(x = NA) {
+  return(list(cuadrados = sum(x^2), cubos = sum(x^3)))
+}
+end.rcode-->
+<p>Probamos la función</p>
+<!--begin.rcode
+sumpot(1:10)
+end.rcode-->
+<p>Escribimos la versión de la misma función que hace la suma de las potencias que le indiquemos</p>
+<!--begin.rcode
+sumpot <- function(x, potencias = 2:3) {
+  L <- length(potencias)
+  resultado <- vector("list", length = L)
+
+  for (i in 1:L) {
+    resultado[[i]] <- sum(x^potencias[i])
+  }
+
+  return(resultado)
+}
+end.rcode-->
+<!--begin.rcode
+sumpot(1:10)
+sumpot(1:10, c(3, 5, 7))
+end.rcode-->
+	
+</section>
+
+		<!-- Start Counter -->
+		<section id="mu-counter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="mu-counter-area">
+							<h2 class="mu-heading-title"></h2>
+
+							<div class="mu-counter-block">
+								<div class="row">
+
+									<!-- Start Single Counter -->
+									<div class="col-md-3 col-sm-6">
+										<div class="mu-single-counter">
+										</div>
+									</div>
+									<!-- / Single Counter -->
+
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Counter -->
+
+
+	</main>
+	
+	<!-- End main content -->	
+			
+
+	
+	
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Bootstrap -->
+    <script src="assets/js/bootstrap.min.js"></script>
+	<!-- Slick slider -->
+    <script type="text/javascript" src="assets/js/slick.min.js"></script>
+    <!-- Counter js -->
+    <script type="text/javascript" src="assets/js/counter.js"></script>
+    <!-- Filterable Gallery js -->
+    <script type="text/javascript" src="assets/js/jquery.filterizr.min.js"></script>
+    <!-- Gallery Lightbox -->
+    <script type="text/javascript" src="assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Ajax contact form  -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    
+	
+    <!-- Custom js -->
+	<script type="text/javascript" src="assets/js/custom.js"></script>
+	
+    
+  </body>
+</html>

@@ -1,0 +1,222 @@
+# Funciones de densidad y distribución
+
+Adaptamos la función que tenemos para que acepte las funciones encargadas de calcular la densidad, cuartil y la distribución como parámetros.
+
+
+```{r}
+Dibuja <- function(n = 50, alfa = .001, qfunc = qnorm, dfunc = dnorm, pfunc = pnorm) {
+    # Dibuja la funcion de densidad
+    # y la de distribucion de la distribución dada por las funciones de los parámetros.
+    # qfunc - Función cuantil
+    # dfunc - Función de densidad.
+    # pfunc - Funcion de distribución.
+    
+    # Por defecto toma los valores de la normal.
+    n <- as.integer(n)
+    if (n < 10) 
+        stop("Hacen falta mas numeros")
+    a <- qfunc(alfa)
+    b <- qfunc(1-alfa)
+    par(mfrow=c(1,2))
+   
+    x <- seq(a,b,,n)
+    plot(x,dfunc(x), type="l", col="blue",ylab="Densidad")
+    plot(x,pfunc(x), type="l", col="red",ylab="Distribucion")
+    
+}
+Dibuja()
+```
+
+Las funciones correspondientes para la uniforme son `dunif`, `qunif` y `punif`.
+
+
+```{r}
+Dibuja(dfunc = dunif, qfunc = qunif, pfunc=punif)
+```
+
+Las mismas funciones sobre la distribución beta son `dt`, `pt` y `qt`, donde el parámetro df indica los grados de libertad.
+
+
+```{r}
+Dibuja(dfunc = function(x) dt(x, df = 3), 
+       qfunc = function(x) qt(x, df = 3), 
+       pfunc = function(x) pt(x, df = 3))
+```
+
+# Estadística Descriptiva
+
+Utilizamos la base de datos de Iris para las pruebas que vamos a realizar de ahora en adelante.
+
+```{r}
+data("iris")
+head(iris)
+```
+
+Utilizamos la función `sumary` para mostrar información resumida del conjunto de datos. Entre esta información encontramos:
++ El mínimo.
++ El máximo.
++ La media.
++ La mediana.
++ El primer y tercer cuartil.
+
+De las 4 características de la base de datos.
+Además nos hace un recuento de cuantas muestras de cada clase tenemos.
+
+
+```{r}
+summary(iris)
+```
+                    
+
+Utilizamos la funcion `hist` para mostrar los histogramas de las 4 características.
+
+
+```{r}
+par(mfrow=c(1,4))
+for (i in 1:4){
+    hist(iris[,i], main = names(iris)[i], xlab = NULL)
+}
+```
+
+
+También podemos pintar los diagramas de caja de las variables, separando en las clases que tenemos.
+
+
+```{r}
+par(mfrow=c(2,2))
+boxplot(Sepal.Length ~ Species, iris,
+  main = "Sepal Lenght vs Specie", col = "blue")
+boxplot(Sepal.Width ~ Species, iris,
+  main = "Sepal Width vs Specie", col = "green")
+boxplot(Petal.Length ~ Species, iris,
+  main = "Petal Lenght vs Specie", col = "red")
+boxplot(Petal.Width ~ Species, iris,
+  main = "Petal Width vs Specie", col = "orange")
+```
+
+Con la función `stem` podems pintar un diagrama de tallos y hojas de un conjunto de datos.
+
+
+```{r}
+stem(iris[,3])
+```
+
+Para hallar la media, varianza y mediana podemos utilizar `mean`, `var` y `median` respectivamente (ademas de usar `summary`).
+
+
+```{r}
+for (i in 1:4){
+    cat("Información sobre: ", names(iris)[i], "\n")
+    cat("\tMedia: ", mean(iris[,i]),"\n")
+    cat("\tVarianza: ", var(iris[,i]),"\n")
+    cat("\tMediana: ", median(iris[,i]),"\n")
+}
+```
+
+
+# t-Test
+
+Un `t-test` es cualquier prueba en la que el estadístico utilizado tiene una distribución t de Student si la hipótesis nula es cierta. 
+
+La función de `R` con el mismo nombre realiza un `t-test` sobre la hipótesis nula "Ambos conjuntos tienen la misma media". Se asume que ambos conjuntos siguen distribuciones normales con misma varianza (se puede cambiar con el parámetro var.equal).
+
+Cuando solo se especifica un conjunto, se asume que la media del segundo es 0.
+Los parámetros de la función son los siguientes:
+
+`t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+       mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95, …)`
+
+- `x`: Un vector no vacio de datos.
+- `y`: Un vector opcional no vacio de datos. Cuando no se especifica, el test se realiza asumiento que la media es 0.
+- `alternate`: Un carácter especificando la hipótesis alternativa. Puede ser `t` para indicar que las medias son distintas, `g` para indicar que la media del primer conjunto es mayor que la del segundo o `l` para indicar lo contrario. 
+- `mu`: Número indicando el verdadero valor de la media (o diferencia de estas).
+- `paired`: Valor lógico indicando si se debe utilizar el conjunto `y`.
+- `var.equal`: Variable lógica indicando si si se debe considerar que ambas varianzas con iguales.
+- `conf.level`: Nivel de confianza del intervalo.
+
+Veamos los resultados obtenidos con una de las propiedades de Iris.
+
+
+```{r}
+t.test(iris[,1])
+```
+
+Como obtenemos un p-value menor al nivel de confianza (por defecto 0.05), rechazamos la hipótesis nula (que la media sea 0).
+
+Obtenemos además un intervalo de confianza (al 95%) para la media.
+
+Buscamos ahora hacer un t-test de la siguiente hipótesis nula: *La diferencia de las médias de lsa longitudes de los sépalos en la Iris setosa y la virginica es 0*. Comenzamos suponiendo que ambas tienen la misma varianza.
+
+
+```{r}
+a = iris[iris[, 5] == "setosa", 1]
+b = iris[iris[, 5] == "virginica", 1]
+t.test(a, b, var.equal=T)
+```
+
+Podemos suponer ahora que no tienen la misma varianza.
+
+
+```{r}
+t.test(a, b, var.equal=F)
+```
+
+
+En ambos casos obtenemos un p.value bajo luego volvemos a rechazar la hipótesis nula.
+
+Podemos hacer el mismo test sobre la varianza en lugar de las medias, utilizando `var.test`
+
+
+```{r}
+var.test(a,b)
+```
+
+# Regresión
+
+Utilizamos la función `pairs` para ver que pareja de variables es más adecuada para un problema de regresión lineal.
+
+
+```{r}
+pairs(iris[1:4], main = "Edgar Anderson's Iris Data", pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
+```
+
+
+Como se puede observar `Petal.Lenght` y `Petal.Width` son las más adecuadas.
+
+Para entrenar un modelo de regresión lineal utilizamos la función
+
+`lm(formula, data, subset, weights, …)`
+
+- `formula`: Un objeto de la clase "formula", descripción simbólica del modelo a ajustar.
+- `data`: Data-frame o lista opcional conteniendo las variables del modelo.
+- `subset`: Vector opcional especificando un subconjunto de observaciones a utilizar durante el ajuste.
+- `weights`: Vector de pesos opcional a utilizar durante el proceso de ajuste.
+
+
+```{r}
+lm(Petal.Width ~ Petal.Length, data=iris)$coefficients
+```
+
+
+Podemos utilizar los coeficientes obtenidos para pintar la recta de regresión junto con los datos. Para ello utilizamos la función `abline` que nos permite pintarla a partir de los valores de la pendiente y su corte con el eje de ordenadas.
+
+
+```{r}
+plot(iris$Petal.Length, iris$Petal.Width, pch=21, bg=c("red","green3","blue")[unclass(iris$Species)], main="Edgar Anderson's Iris Data", xlab="Petal length", ylab="Petal width")
+abline(lm(Petal.Width ~ Petal.Length, data=iris)$coefficients, col="black")
+```
+
+Con `summary` podemos ver información sobre la regresión realizada, entre ella la distribución de los residuos, los coeficientes o el valor de $R^2$, vemos que este último es `0.9271` lugeo el ajuste es bueno.
+
+
+```{r}
+summary(lm(Petal.Width ~ Petal.Length, data=iris))
+```
+
+Podemos usar `plot` sobre la regresión para ver gráficas relacionadas con los residuos.
+
+
+```{r}
+par(mfrow = c(2, 2))
+plot(lm(Petal.Width ~ Petal.Length, data=iris))
+```

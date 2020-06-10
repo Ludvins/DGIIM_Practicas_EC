@@ -1,0 +1,471 @@
+```{r}
+library(data.table)
+datos2 <- fread("http://www.ugr.es/local/andresgc/Datos2.txt")
+datos1 <- fread("http://www.ugr.es/local/andresgc/Datos.txt")
+```
+
+# Función `plot`
+
+La función `plot` nos permite crear un gráfico de una serie de datos. 
+
+`plot(x, y, type, main, sub, xlab, ylab)`
+
+Los parámetros son los siguientes:
+
+- `x`: Coordenadas de los puntos. Se puede utilizar cualquier objeto de `R`, sobre el que se pueda utilizar `plot`.
+- `y`: Coordenadas `y` para `x` en caso de tener una estructura apropiada.
+- `type`: El tipo de `plot` que queremos utilizar **p**oints, **l**ines, **b**oth... Por defecto utiliza puntos.
+
+Veamos ejemplos de ejecución.
+
+
+
+```{r}
+plot(1:100, (1:100)^2, type="l")
+```
+
+```{r}
+plot(datos2$Altura, main = "Altura de Datos2")
+```
+
+
+# Función `curve`
+
+Esta función nos permite dibujar la imagen de una función en un intervalo concreto. Utilizaremos esta funcion en los próximos apartados.
+
+`curve(expr, from, to, n, add, type, xlim)`
+
+Los parámetros son los siguientes:
+
+- `expr`: Función a utilizar (definida sobre `x`).
+- `from` y `to`: Marcan el inicio y el fin del intervalo.
+- `n`: Número de puntos a dibujar. Por defecto `101`.
+- `add`: Indica si el gráfico se añade al gráfico actual. Por defecto `False`.
+- `type`: Indica el tipo de gráfico. Por defecto `l` (lineas)
+- `xlim`: Indica los límites del gráfico en un vector numérico de longitud 2. Por defecto `Null`.
+
+Veamos un ejemplo donde pintamos una función seno y una coseno en un mismo gráfico.
+
+
+```{r}
+curve(sin(x), -pi, pi, col = "blue")
+curve(cos(x), -pi, pi, add = TRUE, col = "red")
+```
+
+
+# Función `text`
+Con esta función podemos añadir el texto que deseemos a una grafica existente.
+
+
+`text(x, y, labels, adj, pos, offset, vfont, cex, col, font)`
+
++ `x,y`: vectores numéricos de coordenadas. Se puede utilizar solo el parámetro `x` con una estrucutra adecuada.
++ `labels`: Vector de tipo carácter o una expresión que especifica el texto.
++ `adj`: uno o dos valores del intervalo [0,1] que especifican la posición del texto respecto a `(x,y)`. Valores como 0, 0.5 y 1 especifican que `(x,y)` debe alinearse con la parte baja/izquierda, el centro y l parte alta/derecha del texto respectivamente.
++ `pos`: toma valores 1, 2, 3 o 4 para indicar que el texto debe estar debajo, a la izquierda, encima o a la derecha.
++ `cex`: factor de expansión de los caracteres.
++ `col` y `font`: Color y la fuente.
+
+Pintamos ahora el texto sobre una crva de la función seno.
+
+
+```{r}
+curve(sin(x), -pi, pi, col = "blue")
+text(-3, 0.5, "sen(x)", col = "blue", cex = 4, adj = 0)
+```
+
+
+
+# Función `symbols`
+
+Con esta función podemos dibujar círculos, cuadrados, rectángulos, estrellas, termómetros o cajas en una posición de un grafo.
+
+`symbols(x, y, circles, squares, rectangles, stars, thermometers, boxplots...)`
+
+Donde
+
+- `x` e `y`: Con las coordenadas de los centros de los símbolos.
+- `circles`: Es un vector con los radios de los círculos.
+- `squares`: Vector con la longitud de los lados.
+- `rectangles`: Matriz de dos columnas. La primera indica la anchura y la segunda la altura.
+- `stars`: Matriz de 3 o más columnas correspondiente a la longitud de los rayos desde el centro de la estrella.
+- `thermometers`: Matriz de 3 o 4 columnas. Las primeras 2 indica la anchura y altura. La tercera y cuarta indican como de lleno esta el termómetro, 
+
+Veamos un ejemplo donde dibujamos 10 circulos cuyos radios se han generado utilizando una distribución uniforme `runif`.
+
+
+```{r}
+z = runif(10)
+x = 1:10
+symbols(x,z,circles = z, xlim = c(-1, 12), ylim = c(0, 1.5), bg = 1:10)
+```
+
+
+# Función `hist`
+
+Esta función nos permite generar y devolver un histograma de un conjunto de datos. Un conjunto simplificado de los parámetros de llamada a  la función son los siguientes:
+
+`hist(x, breaks, freq, probability, include.lowest, right, density, angle, col, border)`
+
+- `x`: Vector que contiene los valores para los que se realizará el histograma.
+- `breaks`: Puntos de corte que definen los intervalos.
+- `freq`: Variable de tipo lógico que indica si se representan frecuencias absolutas (TRUE) o relativas (FALSE).
+- `include.lowest`: Variable de tipo lógico que indica en que intervalo se incluyen los puntos que coincidan con el extremo del intervalos.
+- `right`: Variable de tipo lógico que indica si los intervalos son cerrados por la derecha.
+- `density`: Número de lı́neas por pulgada para hacer sombreados.
+- `angle`: Pendiente en grados para las lı́neas de sombreado.
+- `col`: Color con que se rellenan las barras.
+- `border`: Color con que se dibujan las barras.
+
+Podemos ver un ejemplo de ejecución con los siguiendes datos que generan una muestra pseudoaleatoria de una distribución normal N(0,1).
+
+
+
+```{r}
+hist(rnorm(100), col="red", freq=F, xlim=c(-5,5), ylim=c(0,dnorm(0)*1.2),xlab="", ylab="Densidad",main="Muestra y Población")
+curve(dnorm(x),-5,5,add=T,col="blue")
+```
+
+También podemos ver un histograma sobre nuestros datos.
+
+
+```{r}
+hist(datos2$Altura, col = "purple", main = "Historgrama de la Altura de Datos2")
+```
+
+
+# Función `polygon`
+
+Con esta función podemos dibujar polígonos definidos mediante sus vertices sobre un grafo ya existente.
+
+`polygon(x, y, density, angle, border, col, lty)`
+
+Los parámetros de llamada mas importantes son:
+
+- `density`: Número de líneas por pulgada a utilizar en el sombreado.
+- `angle`: Pendiente en grados de las lineas del sombreado.
+- `border`: Color con el que se dibuja el bordel del polígono. **NA** indica que no se dibujan.
+- `col`: Color a utilizar en el relleno del polígono.
+- `lty`: Tipo de línea a utilizar.
+
+Veamos un ejemplo de ejecución.
+
+
+```{r}
+x=c(1,9)
+plot(x, x, type="n")
+polygon(c(2,4,4,2,NA,6,8,8,6), c(2,2,4,4,NA,6,6,8,8), density=c(10, 20), angle=c(-45, 45),col=c("red","blue"))
+```
+
+
+# Funciones `lines` y `points`
+
+Estas funciones nos permiten añadir líneas o puntos (respectivamente) al gráfico actual. Debemos tener en cuenta que debe existir un gráfico sobre el cual añadir estos elementos. 
+
+`lines(x, y, type = "l")`
+
+`points(x, y, type = "p")`
+
+Los parámetros son los siguientes:
+
+- `x` e `y`: Son las coordenadas de los puntos.
+
+
+```{r}
+x=rnorm(30)
+opar=par(mfrow=c(1,3))
+plot(x,xlab="Tiempo",ylab="Ruido")
+plot(x,xlab="Tiempo",ylab="Ruido")
+lines(x,col="blue")
+plot(x,xlab="Tiempo",ylab="Ruido")
+lines(x,col="blue")
+points(x,col="red",pch=4)
+par(opar)
+```
+
+
+Podemos ver otro ejemplo donde utilizamos `attach` para indicar a `R` que debe buscar variables dentro de `datos2`.
+
+Buscamos pintar puntos `(altura, peso)` conectando aquellos correspondientes a mujeres entre si, e igual para los hombres.
+
+
+```{r}
+attach(datos2)
+Mujer<-Sexo=="M"
+plot(Altura,Peso)
+points(Altura[Mujer], Peso[Mujer], type="p", pch=3, col="yellow")
+points(Altura[!Mujer], Peso[!Mujer], type="p", pch=4, col="blue")
+points(c(Altura[Mujer], NA, Altura[!Mujer]), c(Peso[Mujer], NA, Peso[!Mujer]), type="b", col="red")
+detach(datos2)
+```
+
+
+# Función `barplot`
+
+Esta función nos permite pintar diagramas de barras de diversas formas distintas.
+
+`barplot(height, col, main...)`
+
+Donde `height` puede ser ranro un vector como un matrix que describa las barras del diagrama.
+
+Podemos ver un ejemplo utilizando una tabla de valores pseudoaleatorios para las alturas.
+
+
+```{r}
+tN <- table(Ni <- rpois(100, lambda=5))
+r <- barplot(tN, col=rainbow(20))
+```
+
+
+# Función `boxplot`
+
+Esta función nos permite realizar diagramas de `boxplot` o caja con bigotes.
+
+`boxplot(x,..., range, width, notch, names...)`
+
+donde 
+
+
++ `x`: Vector o lista con los datos a representar, cualquier número de arguementos no especificados se considerarán como vectores de datos también. 
++ `range`: Determina el tamaño de los bigotes del diagrama.
++ `width`: Vector con las ac¡nchuras relativas de cada caja con respecto al plot completo.
++ `notch`: valor lógico, cuando es verdadero se muestra una muesca en cada diagrama, si las muestras de dos diagramas no se tocan entonces hay una fuerte evidencia de que las medianas se diferencian.
++ `names`: vector de nombres de cada caja.
+
+
+```{r}
+attach(datos2)
+boxplot(Peso[Sexo=="M"],Peso[Sexo=="H"], notch=T, names=c("Mujer","Hombre"),
+ylab="Peso",col=c("blue","red"))
+```
+
+# Función `pairs`
+
+Esta función genera una figura que contiene todos los diagramas de dispersión de cada variable frente a las demás. La función se puede utilizar en las clases de objetos `matrix.data.frame` y `formula`.
+
+`pairs(x, labels, panel...)`
+
+- `x`: Coordenadas de puntos como columnas numéricas de una matriz o dataframe.
+- `labels`: Nombres de las variables.
+- `panel`: Función que se utiliza para pontar los contenidos de dentro de cada panel.
+
+
+```{r}
+pairs(datos2[,2:4])
+```
+
+
+```{r}
+panel.hist <- function(x, ...)
+    {
+        usr <- par("usr"); on.exit(par(usr))
+        par(usr = c(usr[1:2], 0, 1.5) )
+        h <- hist(x, plot = FALSE)
+        breaks <- h$breaks; nB <- length(breaks)
+        y <- h$counts; y <- y/max(y)
+        rect(breaks[-nB], 0, breaks[-1], y, col="cyan", ...)
+    }
+pairs(datos2[,2:4], panel=panel.smooth,
+    diag.panel=panel.hist, cex.labels=1.5,
+    font.labels=2)
+```
+
+
+
+
+
+```{r}
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor){
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits=digits)[1]
+    txt <- paste(prefix, txt, sep="")
+    if(missing(cex.cor)) cex <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex * r)
+}
+pairs(datos2[,2:4], lower.panel=panel.smooth, upper.panel=panel.cor)
+```
+
+
+# Gráficos Múltiples
+
+Entre los argumentos de la función `par` hay algunos que permiten representar gráficos múltiples.
+Por ejemplo el argumento `mfcol = c(m,n)` perte dividir el gráfico en $m \times n$ partes iguales que se rellenan por columnas. `mfrow` tiene el comportameinto análogo por filas.
+
+Con las ordenes siguientes, dividimos el gŕafico actual en 6 partes y los rellenamos por filas.
+
+
+```{r}
+par(mfrow=c(2,3))
+x<-(1:10)
+y<-(4:13)^3
+plot(x)
+plot(y)
+plot(x,y)
+plot(y,y^2)
+plot(x,y^2)
+plot(y,x^2)
+```
+
+
+Podemos realizar lo mismo rellenando por columas como hemos dicho antes.
+
+
+```{r}
+par(mfcol=c(2,3))
+x<-(1:10)
+y<-(4:13)^3
+plot(x)
+plot(y)
+plot(x,y)
+plot(y,y^2)
+plot(x,y^2)
+plot(y,x^2)
+```
+
+
+
+# Diagramas de sectores
+
+Para crear diagramas de sectores utilizamos la funciñón `pie`.
+
+`pie(x, labels, shadow, edges, radius, col, main...)`
+
+Donde sus argumentos son:
+
++ `x`: Vector de valores proporcionaes al tamaño de cada sector.
++ `labels`: Vector de etiquetas de los sectores. Por defecto `names(x)`.
++ `shadow`: Vector de valores lógicos indicando qué efecto de somrbeado se debe aplicar a cada sector. Por defecto `False`, es decir, sin sombreado.
++ `edges`: Número de vertices qa utilizar en el polígono que aproximará el círculo. Por defecto `200`.
++ `radius`: Valor del radio del circulo. Por defecto `0.8`.
++ `col`: Vector de colores a utilizar en cada sector.
++ `main`: Titulo del gŕafico.
+
+
+
+```{r}
+pie(datos2$Peso, labels = datos2$Nombre)
+```
+
+
+# Diagramas de estrella
+
+Para crear diagramas de estellas utilizamos la función `star`.
+
+`start(x, full, scale, radius, labels...)`
+
+Donde los argumentos son los siguientes:
+
+- `x`: Matriz de datos.
+- `full`: Valor lógico que indica si los símbolos deben ocupar un círculo completo o solo el semicírculo superior.
+- `scale`: Valor lógico que indica si las columnas deben homogeneizarse al intervalo (0,1).
+- `radius`: Valor lógico que indica si deben dbujarse los radios.
+- `labels`: Etiquetas de los dibujos.
+
+
+```{r}
+attach(datos2)
+stars(matrix(c(Peso,Altura,Edad),ncol=3), main="Diagrama de estrellas")
+stars(matrix(c(Peso,Altura,Edad),ncol=3), main="Diagrama de estrellas", draw.segments = TRUE)
+```
+
+
+Definimos la función `Tarta` que nos permitira eliminar la necesidad de realizar el conteo de fercuencias. Además la pintamos cuatro veces para mostrar la realización de varios gráficos simultaneamente.
+
+
+```{r}
+Tarta<-function(var = "")
+    {
+    if(var == "")
+        stop("Necesitas una variable")
+    opar<-par(mfrow = c(2, 2))
+    for(i in 1:(2 * 2))
+        pie(table(var), col=c("red","blue","yellow","green","purple")) 
+par<-opar
+}
+Tarta(datos2$Altura)
+```
+
+Podemos mejorar la función dando a elegir las filas y columnas en los argumentos de la función.
+
+
+```{r}
+Tarta<-function(var = "",filas=2,columnas=2){
+    if(var == "")
+        stop("Necesitas una variable")
+    filas <-as.integer(filas)
+    columnas<-as.integer(columnas)
+    if(filas<1) stop("El numero de filas es < 1")
+    if(columnas<1) stop("El numero de columnas es < 1")
+    opar<-par(mfrow = c(filas, columnas))
+    for(i in 1:(filas * columnas))
+        pie(table(var), col=c("red","blue","yellow","green","purple"))
+    par<-opar
+}
+```
+
+# Representaciones tridimensionales
+
+Es posible realizar gráficos tridimensionales mediante las funciones `persp`, `contour` e `image`. Las tres utilizan los siguientes parámetros:
+
+- `x`: Vector de puntos del eje X, en orden ascendente, para los que se hará la representació.
+- `y`: Vector de puntos del eje Y, en orden ascendente, para los que se hará la representación.
+- `z`: Matriz de valores de la función a representar. Si este es el primer valor se calculan `x` e `y`.
+
+Comenzamos con la función `persp`, esta nos permite crear un gráfico en perspectiva.
+
+`persp(x, y, z, xlim, ylim, zlim, xlab, ylab, zlab, theta, phi, r, box...)`
+
+Donde 
+
+- `xlim`, `ylim` y `zlim`: Representan los valores extremos del correspondiente eje. Por defecto se utiliza el rango de los datos utilizados.
+- `xlab`, ylab` y `zlab`: Representan las etiquetas de cada eje. Por defecto nulas.
+- `theta` y `pi`. Son los ángulos que definen la dirección de visión. Por defecto `0` y `15` respectivamente.
+- `r`: Distancia desdeel punto de vista al centro del grafo. Por defecto `sqrt(3)`.
+- `box`: Valor lógico indicando si debe dibujarse la caja que delimita el dibujo. Por defecto verdadero.
+
+La función `contour` nos permite realizar mapas de nivel.
+
+`contour(x, y, z, nlevels, levels, labels, xlim, ylim, zlim, col, lty, lwd, add...)`
+
+Donde:
+
+- `nlevels`: Número de niveles de contorno, sólo en el caso de que no se especifique levels. Por defecto `10`.
+- `levels`: Vector numérico de los niveles en que se dibujarán líneas de contorno.
+- `labels`: Vector de etiquetas de las líneas de contorno. Si su valor es `NULL` se utilizan los propios niveles como etiquetas. Por defecto `NULL`.
+- `drawlabels`: Valor lógico que indica si deben etiquetarse las líneas de contorno.
+- `xlim`, `ylim`, `zlim`: Extremos de `x`, `y` y `z`. Por defecto sus rangos.
+- `col`: Color de las líneas.
+- `lty`: Tipo de línea que se dibujará.
+- `lwd`: Anchura de las líneas.
+- `add`: Valor lógico que indica si debe añadirse al gráfico actual. Por defecto falso.
+
+Por último la función `image` dibuja una representación utilizando un código de color o escala de grises.
+
+`image(x, y, z, zlim, add)`
+
+Donde 
+
+- `zlim`: Vector que contiene el mínimo y el máximo de `z`.
+- `add`: Valor lógico que indica si la imagen debe añadirse al gráfico actual. Por defecto falso.
+
+
+```{r}
+Seno<-function(x,y) sin(x*y)
+Dibuja <- function(x = NA, y = NA, f = Seno) {
+    split.screen(c(1, 3))
+    screen(1)
+    image(x, y, outer(x, y, f))
+    screen(2)
+    contour(x, y, outer(x, y, f))
+    screen(3)
+    persp(x, y, outer(x, y, f))
+}
+x<- -5:5
+Dibuja(x,x)
+Dibuja(x,x,function(x,y) sin(x)*cos(y))
+```
+
+
+

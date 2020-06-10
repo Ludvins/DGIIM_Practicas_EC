@@ -1,0 +1,582 @@
+---
+title: "Entrega 2"
+author: "Luis Antonio Ortega Andrés"
+---
+
+# Extracción de cartas 
+
+En este apartado definimos una serie de funciones cuyo objetivo es
+familiarizarnos con la generación de números aleatorios en `R`. Además
+utilizaremos dos funciones de `R` que nos permitirán recoger información sobre
+un conjunto de datos.
+
+* `hist`: Construye un histograma con los datos proporcionados.
+* `summary`: Proporciona datos estadísticos, valor mínimo, media, moda, valor
+  máximo y los cuartiles.
+
+Comenzamos definiendo la función `CuatroAses`, que simula la acción de sacar
+cartas de una baraja (con reemplazamiento), cuando se han extraído 4 ases, devuelve
+el número de cartas que ha necesitado sacar. También existe un parámetro que
+indica el número máximo de cartas que puede extraer, pudiendo ser el resultado
+**no conseguido**.
+
+```{r}
+CuatroAses <- function(Mostrar = F, Maximo = 1000) {
+
+  Extracciones <- 0
+  Resultado <- 1:Maximo
+  Ases <- c(0, 0, 0, 0)
+
+  repeat{
+    if (Maximo <= Extracciones) {
+      if (Mostrar) {
+        cat("No he podido obtener cuatro ases en ", Extracciones, "extracciones. \n")
+      }
+
+      return(list(E = NA, R = Resultado, Conseguido = F))
+    }
+    Extracciones <- Extracciones + 1
+    SacoUna <- sample(52, 1)
+
+    Resultado[Extracciones] <- SacoUna
+
+    if (SacoUna %% 13 != 1) {
+      next
+    }
+    Ases[(SacoUna - 1) %/% 13 + 1] <- 1
+
+    if (sum(Ases) == 4) {
+      break
+    }
+  }
+  length(Resultado) <- Extracciones
+
+  if (Mostrar) {
+    cat("He necesitado ", Extracciones, " extracciones para obtener cuatro ases. \n")
+  }
+
+  return(list(E = Extracciones, R = Resultado, Conseguido = T))
+}
+```
+
+Veamos que resultados obtenemos en las siguientes ejecuciones de prueba, en las
+que probamos también la utilización de parámetros por defecto en las funciones.
+```{r}
+CuatroAses(, 10)
+CuatroAses(T, 10)
+CuatroAses()
+CuatroAses(T)
+```
+
+La siguiente función nos permitirá replicar el experimento anterior un número
+determinado de veces `n`, de forma que utilizaremos `summary` e `hist` para
+interpretar los resultados obtenidos.
+
+```{r}
+DistriAses <- function(n = 5, Maximo = 1000) {
+  Saco <- vector(length = n)
+  for (i in 1:n) {
+    Saco[i] <- CuatroAses(F, Maximo)$E
+  }
+  return(Saco)
+}
+```
+
+Veamos esos resultados.
+
+```{r}
+res <- DistriAses(100)
+summary(res)
+hist(res)
+```
+
+Escribimos ahora una versión de `CuatroAses` donde no implementamos reemplazamiento.
+Para ello generamos una permutación de las cartas de la baraja y la vamos recorriendo.
+
+
+```{r}
+CuatroAses.Sin <- function(Mostrar = F, Maximo = 1000) {
+
+  Ases <- 0
+  Resultado <- sample(52)
+
+  for (i in 1:52) {
+    if (Resultado[i] %% 13 != 1) {
+      next
+    }
+    Ases <- Ases + 1
+    if (Ases == 4) {
+      break
+    }
+  }
+  if (Mostrar) {
+    cat("He necesitado ", i, " extracciones para obtener cuatro ases\n")
+  }
+  return(list(E = i, R = Resultado[1:i]))
+}
+
+DistriAses.Sin <- function(n = 5) {
+  Saco <- vector(length = n)
+  for (i in 1:n) {
+    Saco[i] <- CuatroAses.Sin()$E
+  }
+  return(Saco)
+}
+```
+
+Veamos que resultados obtenemos ahora.
+
+```{r}
+res <- DistriAses.Sin(100)
+summary(res)
+hist(res)
+```
+
+Podemos considerar una versión mas completa de la función donde asignamos a cada
+carta su nombre.
+
+```{r}
+CuatroAses.Nombres <- function(Mostrar = F, Maximo = 1000) {
+
+  Palos <- c("Oros", "Copas", "Espadas", "Bastos")
+  Cartas <- c("As", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez", "Sota", "Caballo", "Rey")
+  Extracciones <- 0
+  Resultado <- 1:Maximo
+  Nombres <- 0
+  Ases <- c(0, 0, 0, 0)
+
+  repeat {
+    Extracciones <- Extracciones + 1
+    if (Maximo <= Extracciones) {
+      if (Mostrar) {
+        cat("No he podido obtener cuatro ases en ", Extracciones, "extracciones. \n")
+      }
+      return(list(E = NA, R = Resultado, N = Nombres, Conseguido = F))
+    }
+    SacoUna <- sample(52, 1)
+    Resultado[Extracciones] <- SacoUna
+
+    Palo <- ((SacoUna - 1) %/% 13) + 1
+    Carta <- ((SacoUna - 1) %% 13) + 1
+
+    Nombres[Extracciones] <- paste(Cartas[Carta], " de ", Palos[Palo])
+
+    if (SacoUna %% 13 != 1) {
+      next
+    }
+
+    Ases[(SacoUna - 1) %/% 13 + 1] <- 1
+
+    if (sum(Ases) == 4) {
+      break
+    }
+  }
+  length(Resultado) <- Extracciones
+
+  if (Mostrar) {
+    cat("He necesitado ", Extracciones, " extracciones para obtener cuatro ases. \n")
+  }
+  return(list(E = NA, R = Resultado, N = Nombres, Conseguido = T))
+}
+```
+
+Podemos ahora programar una función similar donde simulamos una serie de
+lanzamientos de un dado, de forma que los valores obtenidos se van acumulando
+buscando coincidir con un valor objetivo. En caso de pasarse del valor o no
+alcanzarlo en el número máximo de lanzamientos permitidos, se considera un fracaso.
+
+```{r}
+TirarDados <- function(Objetivo = 10, Mostrar = F, Maximo = 1000) {
+
+  # Inicializamos las variables
+  Tiradas <- 0
+  Resultado <- 1:Maximo
+  Acumulado <- 0
+
+  repeat{
+    # Si supera el numero maximo de tiradas sin llegar al objetivo, revolvemos que no
+    # lo ha conseguido
+
+    if (Maximo <= Tiradas) {
+      if (Mostrar) {
+        cat("No he podido llegar al objetivo en ", Tiradas, " tiradas. \n")
+      }
+
+      return(list(E = NA, R = Resultado, Conseguido = F))
+    }
+    # Hacemos una nueva tirada
+    Tiradas <- Tiradas + 1
+    Tirada <- sample(6, 1)
+
+    # Actualizamos los valores obtenidos
+    Resultado[Tiradas] <- Tirada
+    Acumulado <- Acumulado + Tirada
+
+    # Si alcanzamos el objetivo devolvemos exito y todos los valores
+    if (Acumulado == Objetivo) {
+      if (Mostrar) {
+        cat("He necesitado ", Tiradas, " tiradas para alcanzar el objetivo. \n")
+      }
+      length(Resultado) <- Tiradas
+      return(list(E = Tiradas, R = Resultado, Conseguido = T))
+    }
+    # Si nos pasamos devolvemos que no lo hemos conseguido y el vector de tiradas
+    if (Acumulado > Objetivo) {
+      if (Mostrar) {
+        cat("En ", Tiradas, " tiradas me he pasado del objetivo. \n")
+      }
+      length(Resultado) <- Tiradas
+      return(list(E = Tiradas, R = Resultado, Conseguido = F))
+    }
+  }
+}
+
+Distri.Dados <- function(n = 5) {
+  Saco <- vector(length = n)
+  for (i in 1:n) {
+    Saco[i] <- TirarDados(100)$E
+  }
+  return(Saco)
+}
+```
+
+Veamos que resultados obtenemos en 2000 ejecuciones de buscar el valor 100.
+
+```{r}
+res <- Distri.Dados(2000)
+summary(res)
+hist(res)
+```
+
+# Función en Cuadrícula
+
+En este apartado vemos ejemplos de construcción de cuadrículas utilizando la
+distancia al origen de coordinadas.
+
+```{r}
+distancia.origen <- function(x, y) {
+  puntos <- matrix(-1, length(x), length(y))
+  for (i in 1:length(x)) {
+    for (j in 1:length(y)) {
+      puntos[i, j] <- sqrt(x[i]^2 + y[j]^2)
+    }
+  }
+  return(puntos)
+}
+```
+
+Podemos hacer uso de `outer` para simplificar la función y aumentar su
+eficiencia.
+
+```{r}
+distancia.ORIGEN <- function(x, y) {
+  outer(x, y, function(x, y) sqrt(x^2 + y^2))
+}
+```
+
+Podemos hacer uso de `proc.time()` para medir los tiempos de ejecución y
+comparar ambas soluciones.
+
+```{r}
+ptm <- proc.time()
+a <- distancia.origen(1:20, -10:10)
+proc.time() - ptm
+
+ptm <- proc.time()
+a <- distancia.ORIGEN(1:20, -10:10)
+proc.time() - ptm
+```
+
+Utilizando a función `persp` podemos dibujar la malla que forma la cuadrícula.
+
+```{r}
+persp(distancia.ORIGEN(1:20, -10:10))
+```
+
+# Lista busqueda y entornos.
+
+
+Segun la documentación oficial en <https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/search>
+la funcion search() devuelve una lista de paquetes y "Objetos de R".
+
+```{r}
+search()
+```
+
+`searchpaths()` devuelve una lista con las rutas de dichos paquetes.
+
+```{r}
+searchpaths()
+```
+
+Por ejemplo, en mi salida el 4 elemento de `search()` es `"package:graphics"`
+Y en correspondiente en `searchpaths()` es `"/usr/lib/R/library/graphics/"` la ruta del paquete en mi instalación en Linux.
+
+Con `ls()` podemos ver los datos y funciones que he definido.
+
+```{r}
+ls()
+```
+
+
+
+# Lectura de datos
+
+Utilizamos el paquete `data.table` que podemos instalar con la siguiente orden
+de R `install.packages("data.table")`
+
+```{r}
+library(data.table)
+```
+
+Utilizamos la función `fread` para ello.
+
+```{r}
+datos2 <- fread("http://www.ugr.es/local/andresgc/Datos2.txt")
+datos1 <- fread("http://www.ugr.es/local/andresgc/Datos.txt")
+```
+
+Podríamos haberlos leído del archivo local utilizando `read.table` pero de esta
+forma nos ahorramos añadirlo a la entrega.
+
+```{r}
+head(datos2)
+```
+
+# Análisis de datos
+
+Además de `hist` y `summary`, la siguiente función también nos permite obtener
+información de los datos, concretamente, utilizando `boxplot` podremos obtener
+una representación gráfica con el mismo nombre de estos.
+
+Probamos a construir el histograma de los datos correspondientes a la `Altura`
+en `Datos2`.
+
+```{r}
+hist(datos2$Altura)
+```
+
+Obtenemos también los datos estadísticos.
+
+```{r}
+summary(datos2$Altura)
+```
+
+Veamos que podemos hacer con BoxPlot, comenzamos con una sencilla ejecución
+
+```{r}
+boxplot(datos2$Peso)
+```
+
+Podemos tocar los parámetros para obtener mejores resultados
+
+```{r}
+boxplot(datos2$Peso,
+  main = "Peso en Datos2",
+  xlab = "Peso en kg",
+  col = "orange",
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+
+Podemos construir la distribución normal que tenga la misma media y desviación típica que los datos que tenemos
+
+```{r}
+peso_norm <- rnorm(200, mean = mean(datos2$Peso, na.rm = TRUE), sd = sd(datos2$Peso, na.rm = TRUE))
+```
+
+Podemos pintar tanto el original como la nueva versión
+
+```{r}
+boxplot(datos2$Peso, peso_norm,
+  main = "Multiples BoxPlot - Peso en Datos2",
+  names = c("Original", "normal"),
+  las = 2,
+  col = c("orange", "red"),
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+
+
+Podemos mostrar también todos los datos en un mismo boxplot
+
+```{r}
+boxplot(datos2$Peso, datos2$Altura, datos2$Edad,
+  main = "Multiples BoxPlot - Peso, Altura y Edad",
+  names = c("Peso", "Altura", "Edad"),
+  las = 2,
+  col = c("green", "red", "blue"),
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+# Procesos no lineales 
+
+Esta función genera dos listas de números
+Ambas están sujetas a cierta aleatoriedad en su generación  e influyen una en la otra.
+```{r}
+dong1 <- function(numero = 100) {
+
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+
+  x[1] <- 1
+  y[1] <- 1
+
+  for (i in 2:numero) {
+    if (sample(2, 1) == 2) {
+      m <- 1
+    } else {
+      m <- -1
+    }
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+dong1(100)
+```
+
+Podemos cambiar la función para alterar la función para elegir los valores iniciales
+
+```{r}
+dong1.alt <- function(numero = 100, x_ini = 1, y_ini = 1) {
+
+  # Esta función genera dos listas de números
+  # Ambas están sujetas a cierta aleatoriedad en su generacción
+  # e influyen una en la otra.
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+
+  x[1] <- x_ini
+  y[1] <- y_ini
+
+  for (i in 2:numero) {
+    if (sample(2, 1) == 2) {
+      m <- 1
+    } else {
+      m <- -1
+    }
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+```
+
+```{r}
+Inicio <- Sys.time()
+a <- dong1.alt(1000, 2, 2)
+Sys.time() - Inicio
+```
+
+
+
+Podemos aplicar a su vec la mejora de tiempo que se propone en el guion
+
+```{r}
+dong1.alt.t <- function(numero = 100, x_ini = 1, y_ini = 1) {
+
+  # Esta función genera dos listas de números
+  # Ambas están sujetas a cierta aleatoriedad en su generacción
+  # e influyen una en la otra.
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+  m <- vector(mode = "numeric", length = numero)
+
+  x[1] <- x_ini
+  y[1] <- y_ini
+
+  m <- sample(c(-1, 1), numero, T)
+
+  for (i in 2:numero) {
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+
+Inicio <- Sys.time()
+a <- dong1.alt.t(1000, 2, 2)
+Sys.time() - Inicio
+```
+
+Los experimentos no reflejan una mejora en el tiempo (incluso empeora)
+
+Podemos ampliar tambien el rango de valores donde se m
+
+```{r}
+dong1.alt.t.m <- function(numero = 100, x_ini = 1, y_ini = 1, m_range = 1) {
+
+  # Esta función genera dos listas de números
+  # Ambas están sujetas a cierta aleatoriedad en su generacción
+  # e influyen una en la otra.
+
+  x <- vector(mode = "numeric", length = numero)
+  y <- vector(mode = "numeric", length = numero)
+  m <- vector(mode = "numeric", length = numero)
+
+  x[1] <- x_ini
+  y[1] <- y_ini
+
+  m <- sample(c(-m_range, m_range), numero, T)
+
+  for (i in 2:numero) {
+    x[i] <- 0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+    y[i] <- -0.5 * x[i - 1] + 0.5 * y[i - 1] + m[i]
+  }
+  return(list(x = x[2:numero], y = y[2:numero]))
+}
+```
+
+# Suma de potencias
+
+
+Escribimos las funciones que hacen la suma de los cuadrados y los cubos
+de los elementos del vector x
+
+Devuelve el resultado en una lista
+
+```{r}
+sumpot <- function(x = NA) {
+  return(list(cuadrados = sum(x^2), cubos = sum(x^3)))
+}
+```
+
+Probamos la función
+
+```{r}
+sumpot(1:10)
+```
+
+Escribimos la versión de la misma función que hace la suma de las potencias que
+le indiquemos
+
+```{r}
+sumpot <- function(x, potencias = 2:3) {
+  L <- length(potencias)
+  resultado <- vector("list", length = L)
+
+  for (i in 1:L) {
+    resultado[[i]] <- sum(x^potencias[i])
+  }
+
+  return(resultado)
+}
+```
+
+```{r}
+sumpot(1:10)
+sumpot(1:10, c(3, 5, 7))
+```

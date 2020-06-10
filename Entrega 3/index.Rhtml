@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<!--begin.rcode
+library(data.table)
+datos2 <- fread("http://www.ugr.es/local/andresgc/Datos2.txt")
+datos1 <- fread("http://www.ugr.es/local/andresgc/Datos.txt")
+end.rcode-->
+<h1 id="función-plot">Función <code>plot</code></h1>
+<p>La función <code>plot</code> nos permite crear un gráfico de una serie de datos.</p>
+<p><code>plot(x, y, type, main, sub, xlab, ylab)</code></p>
+<p>Los parámetros son los siguientes:</p>
+<ul>
+<li><code>x</code>: Coordenadas de los puntos. Se puede utilizar cualquier objeto de <code>R</code>, sobre el que se pueda utilizar <code>plot</code>.</li>
+<li><code>y</code>: Coordenadas <code>y</code> para <code>x</code> en caso de tener una estructura apropiada.</li>
+<li><code>type</code>: El tipo de <code>plot</code> que queremos utilizar <strong>p</strong>oints, <strong>l</strong>ines, <strong>b</strong>oth… Por defecto utiliza puntos.</li>
+</ul>
+<p>Veamos ejemplos de ejecución.</p>
+<!--begin.rcode
+plot(1:100, (1:100)^2, type="l")
+end.rcode-->
+<!--begin.rcode
+plot(datos2$Altura, main = "Altura de Datos2")
+end.rcode-->
+<h1 id="función-curve">Función <code>curve</code></h1>
+<p>Esta función nos permite dibujar la imagen de una función en un intervalo concreto. Utilizaremos esta funcion en los próximos apartados.</p>
+<p><code>curve(expr, from, to, n, add, type, xlim)</code></p>
+<p>Los parámetros son los siguientes:</p>
+<ul>
+<li><code>expr</code>: Función a utilizar (definida sobre <code>x</code>).</li>
+<li><code>from</code> y <code>to</code>: Marcan el inicio y el fin del intervalo.</li>
+<li><code>n</code>: Número de puntos a dibujar. Por defecto <code>101</code>.</li>
+<li><code>add</code>: Indica si el gráfico se añade al gráfico actual. Por defecto <code>False</code>.</li>
+<li><code>type</code>: Indica el tipo de gráfico. Por defecto <code>l</code> (lineas)</li>
+<li><code>xlim</code>: Indica los límites del gráfico en un vector numérico de longitud 2. Por defecto <code>Null</code>.</li>
+</ul>
+<p>Veamos un ejemplo donde pintamos una función seno y una coseno en un mismo gráfico.</p>
+<!--begin.rcode
+curve(sin(x), -pi, pi, col = "blue")
+curve(cos(x), -pi, pi, add = TRUE, col = "red")
+end.rcode-->
+<h1 id="función-text">Función <code>text</code></h1>
+<p>Con esta función podemos añadir el texto que deseemos a una grafica existente.</p>
+<p><code>text(x, y, labels, adj, pos, offset, vfont, cex, col, font)</code></p>
+<ul>
+<li><code>x,y</code>: vectores numéricos de coordenadas. Se puede utilizar solo el parámetro <code>x</code> con una estrucutra adecuada.</li>
+<li><code>labels</code>: Vector de tipo carácter o una expresión que especifica el texto.</li>
+<li><code>adj</code>: uno o dos valores del intervalo [0,1] que especifican la posición del texto respecto a <code>(x,y)</code>. Valores como 0, 0.5 y 1 especifican que <code>(x,y)</code> debe alinearse con la parte baja/izquierda, el centro y l parte alta/derecha del texto respectivamente.</li>
+<li><code>pos</code>: toma valores 1, 2, 3 o 4 para indicar que el texto debe estar debajo, a la izquierda, encima o a la derecha.</li>
+<li><code>cex</code>: factor de expansión de los caracteres.</li>
+<li><code>col</code> y <code>font</code>: Color y la fuente.</li>
+</ul>
+<p>Pintamos ahora el texto sobre una crva de la función seno.</p>
+<!--begin.rcode
+curve(sin(x), -pi, pi, col = "blue")
+text(-3, 0.5, "sen(x)", col = "blue", cex = 4, adj = 0)
+end.rcode-->
+<h1 id="función-symbols">Función <code>symbols</code></h1>
+<p>Con esta función podemos dibujar círculos, cuadrados, rectángulos, estrellas, termómetros o cajas en una posición de un grafo.</p>
+<p><code>symbols(x, y, circles, squares, rectangles, stars, thermometers, boxplots...)</code></p>
+<p>Donde</p>
+<ul>
+<li><code>x</code> e <code>y</code>: Con las coordenadas de los centros de los símbolos.</li>
+<li><code>circles</code>: Es un vector con los radios de los círculos.</li>
+<li><code>squares</code>: Vector con la longitud de los lados.</li>
+<li><code>rectangles</code>: Matriz de dos columnas. La primera indica la anchura y la segunda la altura.</li>
+<li><code>stars</code>: Matriz de 3 o más columnas correspondiente a la longitud de los rayos desde el centro de la estrella.</li>
+<li><code>thermometers</code>: Matriz de 3 o 4 columnas. Las primeras 2 indica la anchura y altura. La tercera y cuarta indican como de lleno esta el termómetro,</li>
+</ul>
+<p>Veamos un ejemplo donde dibujamos 10 circulos cuyos radios se han generado utilizando una distribución uniforme <code>runif</code>.</p>
+<!--begin.rcode
+z = runif(10)
+x = 1:10
+symbols(x,z,circles = z, xlim = c(-1, 12), ylim = c(0, 1.5), bg = 1:10)
+end.rcode-->
+<h1 id="función-hist">Función <code>hist</code></h1>
+<p>Esta función nos permite generar y devolver un histograma de un conjunto de datos. Un conjunto simplificado de los parámetros de llamada a la función son los siguientes:</p>
+<p><code>hist(x, breaks, freq, probability, include.lowest, right, density, angle, col, border)</code></p>
+<ul>
+<li><code>x</code>: Vector que contiene los valores para los que se realizará el histograma.</li>
+<li><code>breaks</code>: Puntos de corte que definen los intervalos.</li>
+<li><code>freq</code>: Variable de tipo lógico que indica si se representan frecuencias absolutas (TRUE) o relativas (FALSE).</li>
+<li><code>include.lowest</code>: Variable de tipo lógico que indica en que intervalo se incluyen los puntos que coincidan con el extremo del intervalos.</li>
+<li><code>right</code>: Variable de tipo lógico que indica si los intervalos son cerrados por la derecha.</li>
+<li><code>density</code>: Número de lı́neas por pulgada para hacer sombreados.</li>
+<li><code>angle</code>: Pendiente en grados para las lı́neas de sombreado.</li>
+<li><code>col</code>: Color con que se rellenan las barras.</li>
+<li><code>border</code>: Color con que se dibujan las barras.</li>
+</ul>
+<p>Podemos ver un ejemplo de ejecución con los siguiendes datos que generan una muestra pseudoaleatoria de una distribución normal N(0,1).</p>
+<!--begin.rcode
+hist(rnorm(100), col="red", freq=F, xlim=c(-5,5), ylim=c(0,dnorm(0)*1.2),xlab="", ylab="Densidad",main="Muestra y Población")
+curve(dnorm(x),-5,5,add=T,col="blue")
+end.rcode-->
+<p>También podemos ver un histograma sobre nuestros datos.</p>
+<!--begin.rcode
+hist(datos2$Altura, col = "purple", main = "Historgrama de la Altura de Datos2")
+end.rcode-->
+<h1 id="función-polygon">Función <code>polygon</code></h1>
+<p>Con esta función podemos dibujar polígonos definidos mediante sus vertices sobre un grafo ya existente.</p>
+<p><code>polygon(x, y, density, angle, border, col, lty)</code></p>
+<p>Los parámetros de llamada mas importantes son:</p>
+<ul>
+<li><code>density</code>: Número de líneas por pulgada a utilizar en el sombreado.</li>
+<li><code>angle</code>: Pendiente en grados de las lineas del sombreado.</li>
+<li><code>border</code>: Color con el que se dibuja el bordel del polígono. <strong>NA</strong> indica que no se dibujan.</li>
+<li><code>col</code>: Color a utilizar en el relleno del polígono.</li>
+<li><code>lty</code>: Tipo de línea a utilizar.</li>
+</ul>
+<p>Veamos un ejemplo de ejecución.</p>
+<!--begin.rcode
+x=c(1,9)
+plot(x, x, type="n")
+polygon(c(2,4,4,2,NA,6,8,8,6), c(2,2,4,4,NA,6,6,8,8), density=c(10, 20), angle=c(-45, 45),col=c("red","blue"))
+end.rcode-->
+<h1 id="funciones-lines-y-points">Funciones <code>lines</code> y <code>points</code></h1>
+<p>Estas funciones nos permiten añadir líneas o puntos (respectivamente) al gráfico actual. Debemos tener en cuenta que debe existir un gráfico sobre el cual añadir estos elementos.</p>
+<p><code>lines(x, y, type = "l")</code></p>
+<p><code>points(x, y, type = "p")</code></p>
+<p>Los parámetros son los siguientes:</p>
+<ul>
+<li><code>x</code> e <code>y</code>: Son las coordenadas de los puntos.</li>
+</ul>
+<!--begin.rcode
+x=rnorm(30)
+opar=par(mfrow=c(1,3))
+plot(x,xlab="Tiempo",ylab="Ruido")
+plot(x,xlab="Tiempo",ylab="Ruido")
+lines(x,col="blue")
+plot(x,xlab="Tiempo",ylab="Ruido")
+lines(x,col="blue")
+points(x,col="red",pch=4)
+par(opar)
+end.rcode-->
+<p>Podemos ver otro ejemplo donde utilizamos <code>attach</code> para indicar a <code>R</code> que debe buscar variables dentro de <code>datos2</code>.</p>
+<p>Buscamos pintar puntos <code>(altura, peso)</code> conectando aquellos correspondientes a mujeres entre si, e igual para los hombres.</p>
+<!--begin.rcode
+attach(datos2)
+Mujer<-Sexo=="M"
+plot(Altura,Peso)
+points(Altura[Mujer], Peso[Mujer], type="p", pch=3, col="yellow")
+points(Altura[!Mujer], Peso[!Mujer], type="p", pch=4, col="blue")
+points(c(Altura[Mujer], NA, Altura[!Mujer]), c(Peso[Mujer], NA, Peso[!Mujer]), type="b", col="red")
+detach(datos2)
+end.rcode-->
+<h1 id="función-barplot">Función <code>barplot</code></h1>
+<p>Esta función nos permite pintar diagramas de barras de diversas formas distintas.</p>
+<p><code>barplot(height, col, main...)</code></p>
+<p>Donde <code>height</code> puede ser ranro un vector como un matrix que describa las barras del diagrama.</p>
+<p>Podemos ver un ejemplo utilizando una tabla de valores pseudoaleatorios para las alturas.</p>
+<!--begin.rcode
+tN <- table(Ni <- rpois(100, lambda=5))
+r <- barplot(tN, col=rainbow(20))
+end.rcode-->
+<h1 id="función-boxplot">Función <code>boxplot</code></h1>
+<p>Esta función nos permite realizar diagramas de <code>boxplot</code> o caja con bigotes.</p>
+<p><code>boxplot(x,..., range, width, notch, names...)</code></p>
+<p>donde</p>
+<ul>
+<li><code>x</code>: Vector o lista con los datos a representar, cualquier número de arguementos no especificados se considerarán como vectores de datos también.</li>
+<li><code>range</code>: Determina el tamaño de los bigotes del diagrama.</li>
+<li><code>width</code>: Vector con las ac¡nchuras relativas de cada caja con respecto al plot completo.</li>
+<li><code>notch</code>: valor lógico, cuando es verdadero se muestra una muesca en cada diagrama, si las muestras de dos diagramas no se tocan entonces hay una fuerte evidencia de que las medianas se diferencian.</li>
+<li><code>names</code>: vector de nombres de cada caja.</li>
+</ul>
+<!--begin.rcode
+attach(datos2)
+boxplot(Peso[Sexo=="M"],Peso[Sexo=="H"], notch=T, names=c("Mujer","Hombre"),
+ylab="Peso",col=c("blue","red"))
+end.rcode-->
+<h1 id="función-pairs">Función <code>pairs</code></h1>
+<p>Esta función genera una figura que contiene todos los diagramas de dispersión de cada variable frente a las demás. La función se puede utilizar en las clases de objetos <code>matrix.data.frame</code> y <code>formula</code>.</p>
+<p><code>pairs(x, labels, panel...)</code></p>
+<ul>
+<li><code>x</code>: Coordenadas de puntos como columnas numéricas de una matriz o dataframe.</li>
+<li><code>labels</code>: Nombres de las variables.</li>
+<li><code>panel</code>: Función que se utiliza para pontar los contenidos de dentro de cada panel.</li>
+</ul>
+<!--begin.rcode
+pairs(datos2[,2:4])
+end.rcode-->
+<!--begin.rcode
+panel.hist <- function(x, ...)
+    {
+        usr <- par("usr"); on.exit(par(usr))
+        par(usr = c(usr[1:2], 0, 1.5) )
+        h <- hist(x, plot = FALSE)
+        breaks <- h$breaks; nB <- length(breaks)
+        y <- h$counts; y <- y/max(y)
+        rect(breaks[-nB], 0, breaks[-1], y, col="cyan", ...)
+    }
+pairs(datos2[,2:4], panel=panel.smooth,
+    diag.panel=panel.hist, cex.labels=1.5,
+    font.labels=2)
+end.rcode-->
+<!--begin.rcode
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor){
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits=digits)[1]
+    txt <- paste(prefix, txt, sep="")
+    if(missing(cex.cor)) cex <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex * r)
+}
+pairs(datos2[,2:4], lower.panel=panel.smooth, upper.panel=panel.cor)
+end.rcode-->
+<h1 id="gráficos-múltiples">Gráficos Múltiples</h1>
+<p>Entre los argumentos de la función <code>par</code> hay algunos que permiten representar gráficos múltiples. Por ejemplo el argumento <code>mfcol = c(m,n)</code> perte dividir el gráfico en <span class="math inline">\(m \times n\)</span> partes iguales que se rellenan por columnas. <code>mfrow</code> tiene el comportameinto análogo por filas.</p>
+<p>Con las ordenes siguientes, dividimos el gŕafico actual en 6 partes y los rellenamos por filas.</p>
+<!--begin.rcode
+par(mfrow=c(2,3))
+x<-(1:10)
+y<-(4:13)^3
+plot(x)
+plot(y)
+plot(x,y)
+plot(y,y^2)
+plot(x,y^2)
+plot(y,x^2)
+end.rcode-->
+<p>Podemos realizar lo mismo rellenando por columas como hemos dicho antes.</p>
+<!--begin.rcode
+par(mfcol=c(2,3))
+x<-(1:10)
+y<-(4:13)^3
+plot(x)
+plot(y)
+plot(x,y)
+plot(y,y^2)
+plot(x,y^2)
+plot(y,x^2)
+end.rcode-->
+<h1 id="diagramas-de-sectores">Diagramas de sectores</h1>
+<p>Para crear diagramas de sectores utilizamos la funciñón <code>pie</code>.</p>
+<p><code>pie(x, labels, shadow, edges, radius, col, main...)</code></p>
+<p>Donde sus argumentos son:</p>
+<ul>
+<li><code>x</code>: Vector de valores proporcionaes al tamaño de cada sector.</li>
+<li><code>labels</code>: Vector de etiquetas de los sectores. Por defecto <code>names(x)</code>.</li>
+<li><code>shadow</code>: Vector de valores lógicos indicando qué efecto de somrbeado se debe aplicar a cada sector. Por defecto <code>False</code>, es decir, sin sombreado.</li>
+<li><code>edges</code>: Número de vertices qa utilizar en el polígono que aproximará el círculo. Por defecto <code>200</code>.</li>
+<li><code>radius</code>: Valor del radio del circulo. Por defecto <code>0.8</code>.</li>
+<li><code>col</code>: Vector de colores a utilizar en cada sector.</li>
+<li><code>main</code>: Titulo del gŕafico.</li>
+</ul>
+<!--begin.rcode
+pie(datos2$Peso, labels = datos2$Nombre)
+end.rcode-->
+<h1 id="diagramas-de-estrella">Diagramas de estrella</h1>
+<p>Para crear diagramas de estellas utilizamos la función <code>star</code>.</p>
+<p><code>start(x, full, scale, radius, labels...)</code></p>
+<p>Donde los argumentos son los siguientes:</p>
+<ul>
+<li><code>x</code>: Matriz de datos.</li>
+<li><code>full</code>: Valor lógico que indica si los símbolos deben ocupar un círculo completo o solo el semicírculo superior.</li>
+<li><code>scale</code>: Valor lógico que indica si las columnas deben homogeneizarse al intervalo (0,1).</li>
+<li><code>radius</code>: Valor lógico que indica si deben dbujarse los radios.</li>
+<li><code>labels</code>: Etiquetas de los dibujos.</li>
+</ul>
+<!--begin.rcode
+attach(datos2)
+stars(matrix(c(Peso,Altura,Edad),ncol=3), main="Diagrama de estrellas")
+stars(matrix(c(Peso,Altura,Edad),ncol=3), main="Diagrama de estrellas", draw.segments = TRUE)
+end.rcode-->
+<p>Definimos la función <code>Tarta</code> que nos permitira eliminar la necesidad de realizar el conteo de fercuencias. Además la pintamos cuatro veces para mostrar la realización de varios gráficos simultaneamente.</p>
+<!--begin.rcode
+Tarta<-function(var = "")
+    {
+    if(var == "")
+        stop("Necesitas una variable")
+    opar<-par(mfrow = c(2, 2))
+    for(i in 1:(2 * 2))
+        pie(table(var), col=c("red","blue","yellow","green","purple")) 
+par<-opar
+}
+Tarta(datos2$Altura)
+end.rcode-->
+<p>Podemos mejorar la función dando a elegir las filas y columnas en los argumentos de la función.</p>
+<!--begin.rcode
+Tarta<-function(var = "",filas=2,columnas=2){
+    if(var == "")
+        stop("Necesitas una variable")
+    filas <-as.integer(filas)
+    columnas<-as.integer(columnas)
+    if(filas<1) stop("El numero de filas es < 1")
+    if(columnas<1) stop("El numero de columnas es < 1")
+    opar<-par(mfrow = c(filas, columnas))
+    for(i in 1:(filas * columnas))
+        pie(table(var), col=c("red","blue","yellow","green","purple"))
+    par<-opar
+}
+end.rcode-->
+<h1 id="representaciones-tridimensionales">Representaciones tridimensionales</h1>
+<p>Es posible realizar gráficos tridimensionales mediante las funciones <code>persp</code>, <code>contour</code> e <code>image</code>. Las tres utilizan los siguientes parámetros:</p>
+<ul>
+<li><code>x</code>: Vector de puntos del eje X, en orden ascendente, para los que se hará la representació.</li>
+<li><code>y</code>: Vector de puntos del eje Y, en orden ascendente, para los que se hará la representación.</li>
+<li><code>z</code>: Matriz de valores de la función a representar. Si este es el primer valor se calculan <code>x</code> e <code>y</code>.</li>
+</ul>
+<p>Comenzamos con la función <code>persp</code>, esta nos permite crear un gráfico en perspectiva.</p>
+<p><code>persp(x, y, z, xlim, ylim, zlim, xlab, ylab, zlab, theta, phi, r, box...)</code></p>
+<p>Donde</p>
+<ul>
+<li><code>xlim</code>, <code>ylim</code> y <code>zlim</code>: Representan los valores extremos del correspondiente eje. Por defecto se utiliza el rango de los datos utilizados.</li>
+<li><code>xlab</code>, ylab<code>y</code>zlab`: Representan las etiquetas de cada eje. Por defecto nulas.</li>
+<li><code>theta</code> y <code>pi</code>. Son los ángulos que definen la dirección de visión. Por defecto <code>0</code> y <code>15</code> respectivamente.</li>
+<li><code>r</code>: Distancia desdeel punto de vista al centro del grafo. Por defecto <code>sqrt(3)</code>.</li>
+<li><code>box</code>: Valor lógico indicando si debe dibujarse la caja que delimita el dibujo. Por defecto verdadero.</li>
+</ul>
+<p>La función <code>contour</code> nos permite realizar mapas de nivel.</p>
+<p><code>contour(x, y, z, nlevels, levels, labels, xlim, ylim, zlim, col, lty, lwd, add...)</code></p>
+<p>Donde:</p>
+<ul>
+<li><code>nlevels</code>: Número de niveles de contorno, sólo en el caso de que no se especifique levels. Por defecto <code>10</code>.</li>
+<li><code>levels</code>: Vector numérico de los niveles en que se dibujarán líneas de contorno.</li>
+<li><code>labels</code>: Vector de etiquetas de las líneas de contorno. Si su valor es <code>NULL</code> se utilizan los propios niveles como etiquetas. Por defecto <code>NULL</code>.</li>
+<li><code>drawlabels</code>: Valor lógico que indica si deben etiquetarse las líneas de contorno.</li>
+<li><code>xlim</code>, <code>ylim</code>, <code>zlim</code>: Extremos de <code>x</code>, <code>y</code> y <code>z</code>. Por defecto sus rangos.</li>
+<li><code>col</code>: Color de las líneas.</li>
+<li><code>lty</code>: Tipo de línea que se dibujará.</li>
+<li><code>lwd</code>: Anchura de las líneas.</li>
+<li><code>add</code>: Valor lógico que indica si debe añadirse al gráfico actual. Por defecto falso.</li>
+</ul>
+<p>Por último la función <code>image</code> dibuja una representación utilizando un código de color o escala de grises.</p>
+<p><code>image(x, y, z, zlim, add)</code></p>
+<p>Donde</p>
+<ul>
+<li><code>zlim</code>: Vector que contiene el mínimo y el máximo de <code>z</code>.</li>
+<li><code>add</code>: Valor lógico que indica si la imagen debe añadirse al gráfico actual. Por defecto falso.</li>
+</ul>
+<!--begin.rcode
+Seno<-function(x,y) sin(x*y)
+Dibuja <- function(x = NA, y = NA, f = Seno) {
+    split.screen(c(1, 3))
+    screen(1)
+    image(x, y, outer(x, y, f))
+    screen(2)
+    contour(x, y, outer(x, y, f))
+    screen(3)
+    persp(x, y, outer(x, y, f))
+}
+x<- -5:5
+Dibuja(x,x)
+Dibuja(x,x,function(x,y) sin(x)*cos(y))
+end.rcode-->
+</body>
+</html>

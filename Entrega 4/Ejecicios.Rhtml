@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="ejercicios-en-r">Ejercicios en R</h1>
+<h2 id="estadística-computacional.-guillermo-galindo-ortuño">Estadística Computacional. Guillermo Galindo Ortuño</h2>
+<h3 id="funciones-de-densidad-y-distribución.">7.1 Funciones de densidad y distribución.</h3>
+<p>En el guión se nos muestra una función que permite dibujar la función de densidad y la de distribución de una normal utilizando <code>dnorm</code>, <code>pnorm</code> y <code>qnorm</code>. La primera y la segunda devuelven el valor de la función de densidad y distribución respectivamente, y toman como parámetros un punto <code>x</code> en el que calcularla, <code>mean</code> la media de la normal, y <code>sd</code> la desviación estándar. La última devuelve el cuantil <code>p</code> para una normal de media <code>mean</code> y desviación estándar <code>sd</code>. Todas asumen por defecto una normal de media 0 y desviación estándar 1.</p>
+<p>La función es la siguiente: <!--begin.rcode
+dibuja_norm <-function(n=30,alfa=.001)
+{
+    n<-as.integer(n)
+   if (n<10) stop("Hacen falta mas numeros")
+
+    a<-qnorm(alfa)
+    b<-qnorm(1-alfa)
+
+    x<-seq(a,b,,n)
+    plot(x,dnorm(x))
+
+    x<-seq(a,b,,n)
+    plot(x,pnorm(x))
+}
+end.rcode--></p>
+<p>Esta lo que hace es tomar el cuantil de valor <code>alpha</code>, y dibujar <code>n</code> puntos entre el cuantil <code>alpha</code> y <code>1-alpha</code>. Realizamos la versión equivalente de esta para las respectivas funciones de la distribución uniforme, que en lugar de <code>mean</code> y <code>sd</code> toma como parámetros <code>min</code> y <code>max</code> los límites superior e inferior de la distribución deseada, que por defecto valen 0 y 1 respectivamente.</p>
+<!--begin.rcode
+dibuja_unif <-function(n=30,alfa=.001)
+{
+    n<-as.integer(n)
+    if (n<10) stop("Hacen falta mas numeros")
+
+    a<-qunif(alfa)
+    b<-qunif(1-alfa)
+
+    x<-seq(a,b,,n)
+    plot(x,dunif(x))
+
+    x<-seq(a,b,,n)
+    plot(x,punif(x))
+}
+end.rcode-->
+<p>Ahora, si hacemos <code>?Distributions</code> nos muestra todas las distribuciones disponibles en R. Entonces, tomamos por ejemplo la distribución de Cauchy con parámetros <code>location</code> y <code>scale</code> por defecto, y creamos otra función dibuja similar para esta.</p>
+<!--begin.rcode
+dibuja_cauchy <-function(n=30,alfa=.001)
+{
+    n<-as.integer(n)
+    if (n<10) stop("Hacen falta mas numeros")
+
+    a<-qcauchy(alfa)
+    b<-qcauchy(1-alfa)
+
+    x<-seq(a,b,,n)
+    plot(x,dcauchy(x))
+
+    x<-seq(a,b,,n)
+    plot(x,pcauchy(x))
+}
+end.rcode-->
+<h3 id="estadísitica-descriptiva">7.2 Estadísitica descriptiva</h3>
+<p>En este apartado realizaremos un estudio de estadística descriptiva sobre el conjunto de datos de ejemplo más utilizado en la ingeniería informática, el conjunto iris. Este contieme 150 muestras de este tipo de flor. Para cargarlo, realizamos lo siguite:</p>
+<!--begin.rcode
+data("iris")
+end.rcode-->
+<p>Podemos entonces aplicar sobre este las funciones que hemos estudiado a lo largo del curso para obtener información.</p>
+<!--begin.rcode
+summary(iris)
+end.rcode-->
+<p>Primero, la función <code>sumary</code> nos muestra los atributos de cada muestra, que son la longitud y anchura del sépalo, la longitud y anchura del pétalo, y la especie, siendo las posibilidades setosa, versicolor, y virgínica. Además, nos muestra un resumen de los datos de cada atributo, como los cuartiles, media, etc.</p>
+<!--begin.rcode
+plot(iris)
+hist(iris[,1], main=paste("Histogram of ", names(iris)[1]), xlab=names(iris)[1])
+par(mfrow=c(1,5))
+for (i in 1:4) {boxplot(iris[,i]) ;title(names(iris)[i])}
+end.rcode-->
+<p>Aquí mostramos un gráfico con toda la información disponible en el conjunto, utilizando la función <code>plot</code>, luego mostramos un histograma usando <code>hist</code> con los datos de las longitudes de los sépalos, y por ultimo un gráfico de cajas(<code>boxplot</code>) por cada longitud y anchura, tanto del sépalo como del pétalo.</p>
+<!--begin.rcode
+stem(iris[,2])
+mean(iris[,2])
+median(iris[,2])
+var(iris[,2])
+end.rcode-->
+<p>En primer lugar mostramos un gráfico de <em>tallo y hoja</em> usando <code>stem</code>. Este nos muestra que en dentro de las anchuras de los sépalos, que es el atributo sobre el que mostramos el gráfico, tenemos valores como 2.0, 2.2, 2.2, 2.2, …, 4.2, 4.4. Después, mostramos la media y la mediana de este mismo atributo, y podemos observar que los valores son muy parecidos, luego el valor medio deja al mismo o casi al mismo número de elementos a izquierda y derecha. Además, ser la varianza pequeña sabemos que los datos no se encuentran muy dispersos respecto de el mencionado valor medio.</p>
+<h3 id="el-problema-de-las-dos-muestras">7.5 El problema de las dos muestras</h3>
+<p>En este a apartado utilizamos la función <code>t.test</code> que nos permite realizar un test de hipótesis utilizando una distribución <em>t de Student</em>. Este, si solo utilizamos una distribución comprueba si la media de una población conocida posee una distribución normal. Si utilizamos dos distribuciones en lugar de una, nos dice si las medias de dos poblaciones son iguales en forma normal. Vemos un par de ejemplos de su ejecución sobre nuestros datos.</p>
+<!--begin.rcode
+SepalL.Setosa       <-  iris[iris[,5] == "setosa", 1]
+SepalL.Versicolor   <-  iris[iris[,5] == "versicolor", 1]
+
+t.test(SepalL.Versicolor)
+t.test(SepalL.Setosa, SepalL.Versicolor)
+end.rcode-->
+<p>Esta función toma por defecto grado de confianza 0.05, por tanto, si <em>p-value</em> que obtenemos es menor que 0.05 rechazamos la hipótesis nula. En los dos casos obtenemos un p-value de <span class="math inline">\(2.2\cdot 10^{-16}\)</span>, lo que quiere decir que rechazamos, tanto que la media de la longitud de los sépalos de las plantas de tipo versicolor sigan una distribución normal (de media 0 y std 1), como que tengan la misma media estas longitudes y la de las plantas de tipo setosa.</p>
+<h3 id="regresión">7.6 Regresión</h3>
+<p>En este apartado utilizaremos la función <code>lm</code> para realizar un ajuste de un modelo lineal sobre dos atributos distintos. En particular, lo hacemos sobre la anchura y longitud de los pétalos.</p>
+<!--begin.rcode
+plot(iris[,"Petal.Width"], iris[,"Petal.Length"], xlab="Anchura", ylab="Longitud")
+abline(lm(Petal.Width ~ Petal.Length, data=iris))
+
+lm(Petal.Width ~ Petal.Length, data=iris)
+summary(lm(Petal.Width ~ Petal.Length, data=iris))
+end.rcode-->
+<p>Aquí, mostramos en el mismo gráfico, la longitud de los pétalos frente a la anchura, y la recta de regresión calculada utilizando <code>lm</code>. Seguidamente, mostramos los coeficientes que hemos obtenido, y utilizamos <code>summary</code> para poder ver datos como el error estándar, el <em>t value</em>, etc.</p>
+</body>
+</html>
